@@ -1,0 +1,127 @@
+---
+title: "Cancel"
+---
+
+The `cancel` callback is sent when a player's bet fails to complete — due to network issues, timeouts, or system errors. Your server must refund the full bet amount back to the player's balance to ensure account accuracy. This operation is idempotent — if your wallet receives more than one request with the same `transactionId`, you must register the refund only once.
+
+- **URL:** Your configured Callback URL
+- **Method:** POST
+- **Headers:** `X-Request-Signature`, `Content-Type`, `Accept`
+
+## Request parameters
+
+<ParamField body="command" type="string" required>
+  Always `"cancel"` for this callback type.
+</ParamField>
+
+<ParamField body="transactionId" type="string" required>
+  Unique reference of this cancel transaction created in Scorpio Play. Use this to enforce idempotency.
+</ParamField>
+
+<ParamField body="referenceId" type="string" required>
+  The `transactionId` of the original bet transaction being cancelled. Use this to look up the bet you need to reverse in your system.
+</ParamField>
+
+<ParamField body="playerId" type="string" required>
+  Unique identifier of the player from your system.
+</ParamField>
+
+<ParamField body="roundId" type="string" required>
+  Unique reference of the game round.
+</ParamField>
+
+<ParamField body="providerId" type="number" required>
+  Unique identifier of the game provider in Scorpio Play.
+</ParamField>
+
+<ParamField body="providerName" type="string" required>
+  Name of the game provider.
+</ParamField>
+
+<ParamField body="gameCode" type="string" required>
+  Unique identifier of the game in Scorpio Play.
+</ParamField>
+
+<ParamField body="gameName" type="string" required>
+  Display name of the game.
+</ParamField>
+
+<ParamField body="currency" type="string" required>
+  Player currency code per ISO-4217 (e.g., `EUR`, `USD`).
+</ParamField>
+
+<ParamField body="amount" type="number" required>
+  The refund amount to credit back to the player's balance. This matches the original bet amount.
+</ParamField>
+
+<ParamField body="timestamp" type="number" required>
+  Unix timestamp of the request.
+</ParamField>
+
+## Response fields
+
+Your server must respond with HTTP 200 and a JSON body containing the following fields:
+
+<ResponseField name="balance" type="number" required>
+  The player's updated balance after the refund is applied.
+</ResponseField>
+
+<ResponseField name="statusCode" type="string" required>
+  Result of the operation. Must be `"OK"` on success. See the status codes table below for all possible values.
+</ResponseField>
+
+## Status codes
+
+| Status code | Description |
+| :-- | :-- |
+| `OK` | Request successful |
+| `ERR_NOT_AUTHENTICATED` | The player is not authenticated |
+| `ERR_TRANSACTION_DOES_NOT_EXIST` | The referenced bet transaction does not exist in your system |
+| `ERR_TRANSACTION_ROLLED_BACK` | The referenced transaction has already been reversed |
+| `ERR_INTEGRITY_CHECK_FAILED` | Message integrity check failed |
+| `ERR_UNKNOWN` | Internal server error |
+
+<Warning>
+  Your response must be returned within **4 seconds**. If the request times out or returns an error, Scorpio Play will automatically retry the request up to **2 more times**.
+</Warning>
+
+<Tip>
+  Use `referenceId` to locate the original bet in your database. If the bet was never recorded (e.g., your system never received it), you can safely return `OK` with the player's current balance — there is nothing to refund.
+</Tip>
+
+## Examples
+
+<CodeGroup>
+
+```json Request
+{
+  "command": "cancel",
+  "transactionId": "SP215202",
+  "referenceId": "SP215201",
+  "playerId": "1101",
+  "roundId": "65215842315484512",
+  "providerId": 2,
+  "providerName": "EGT Digital",
+  "gameCode": "FSHBLSlot",
+  "gameName": "40 Burning Hot Bell Link",
+  "currency": "EUR",
+  "amount": 10,
+  "timestamp": 1586335186372
+}
+```
+
+```json Success response
+{
+  "balance": 19839891,
+  "statusCode": "OK"
+}
+```
+
+```json Error response
+{
+  "statusCode": "ERR_TRANSACTION_DOES_NOT_EXIST",
+  "balance": 19839890
+}
+```
+
+</CodeGroup>

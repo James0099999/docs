@@ -1,0 +1,73 @@
+---
+title: "Bonus Call Cancel"
+---
+
+Use this endpoint to terminate an in-progress bonus call before it finishes naturally. Canceling a bonus forfeits any remaining free spins or guaranteed win amount that has not yet been paid out. You can only cancel a bonus that is currently active — attempting to cancel one that has already ended returns a `BONUSCALL_ALEADY_ENDED` error.
+
+## Request
+
+**Endpoint:** `POST /v1/bonus-call/cancel`
+
+**Headers**
+
+| Name | Value |
+| :-- | :-- |
+| `Authorization` | `Bearer <API_TOKEN>` |
+| `Content-Type` | `application/json` |
+| `Accept` | `application/json` |
+
+### Request body
+
+<ParamField body="issueId" type="string" required>
+  The unique identifier of the bonus call to cancel, as returned by the [Register Bonus](https://skysoft-e628c952.mintlify.app/api-reference/bonus/register) endpoint.
+</ParamField>
+
+### Example request
+
+```bash
+curl --request POST \
+  --url https://api.scorpioplay.com/v1/bonus-call/cancel \
+  --header 'Authorization: Bearer <API_TOKEN>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "issueId": "i3746"
+  }'
+```
+
+<Warning>
+  Cancellation is irreversible. Any free spins not yet played or any guaranteed win amount not yet awarded will be forfeited. Confirm with the player before canceling on their behalf.
+</Warning>
+
+---
+
+## Bonus lifecycle
+
+A bonus call moves through the following states:
+
+| Status | Description | Can be canceled? |
+| :-- | :-- | :-- |
+| Active | The bonus is registered and waiting to be triggered, or currently in progress. | Yes |
+| Completed | All spins have been played or the guaranteed amount has been paid out. | No — returns `BONUSCALL_ALEADY_ENDED` |
+
+If you attempt to cancel a bonus that has already completed, the API returns an error with the code `BONUSCALL_ALEADY_ENDED`. Check the current status first using the [Bonus Detail](https://skysoft-e628c952.mintlify.app/api-reference/bonus/detail) endpoint if you are unsure.
+
+---
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  `true` when the bonus was successfully canceled.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  A short confirmation string, typically `"OK"`.
+</ResponseField>
+
+### Example response
+
+```json
+{
+  "success": true,
+  "message": "OK"
+}
+```

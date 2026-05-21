@@ -1,0 +1,86 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Mintlify Starter Kit",
+  "colors": {
+    "primary": "#16A34A",
+    "light": "#07C983",
+    "dark": "#15803D"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "iGaming Platform API",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "gettingstarted/introduction",
+              "gettingstarted/fundamentals",
+              "gettingstarted/seamless-wallet-api",
+              "gettingstarted/bonuscall",
+              "gettingstarted/error-codes"
+            ]
+          },
+          {
+            "group": "Main API",
+            "pages": [
+              "mainapi/provider-list",
+              "mainapi/game-list",
+              "mainapi/game-launch",
+              "mainapi/bonus-call-register",
+              "mainapi/bonus-call-cancel"
+            ]
+          },
+          {
+            "group": "Seamless Wallet API",
+            "pages": [
+              "seamless/balance",
+              "seamless/bet",
+              "seamless/win",
+              "seamless/bet-win",
+              "seamless/cancel"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:hi@mintlify.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://dashboard.mintlify.com"
+    }
+  },
+  "contextual": {
+    "options": [
+     "copy",
+     "view",
+     "chatgpt",
+     "claude",
+     "perplexity",
+     "mcp",
+     "cursor",
+     "vscode"
+   ]
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/mintlify",
+      "github": "https://github.com/mintlify",
+      "linkedin": "https://linkedin.com/company/mintlify"
+    }
+  }
+}

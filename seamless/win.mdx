@@ -1,0 +1,126 @@
+---
+title: "Win"
+---
+
+The `win` callback is sent when a player wins a round. Your server must credit the win amount to the player's balance and return the updated balance. This operation is idempotent — if your wallet receives more than one request with the same `transactionId`, you must register the transaction only once.
+
+- **URL:** Your configured Callback URL
+- **Method:** POST
+- **Headers:** `X-Request-Signature`, `Content-Type`, `Accept`
+
+## Request parameters
+
+<ParamField body="command" type="string" required>
+  Always `"win"` for this callback type.
+</ParamField>
+
+<ParamField body="transactionId" type="string" required>
+  Unique reference of the transaction created in Scorpio Play. Use this to enforce idempotency.
+</ParamField>
+
+<ParamField body="playerId" type="string" required>
+  Unique identifier of the player from your system.
+</ParamField>
+
+<ParamField body="roundId" type="string" required>
+  Unique reference of the game round.
+</ParamField>
+
+<ParamField body="providerId" type="number" required>
+  Unique identifier of the game provider in Scorpio Play.
+</ParamField>
+
+<ParamField body="providerName" type="string" required>
+  Name of the game provider.
+</ParamField>
+
+<ParamField body="gameCode" type="string" required>
+  Unique identifier of the game in Scorpio Play.
+</ParamField>
+
+<ParamField body="gameName" type="string" required>
+  Display name of the game.
+</ParamField>
+
+<ParamField body="currency" type="string" required>
+  Player currency code per ISO-4217 (e.g., `EUR`, `USD`).
+</ParamField>
+
+<ParamField body="amount" type="number" required>
+  Win amount to credit to the player's balance.
+</ParamField>
+
+<ParamField body="isRoundFinished" type="boolean" required>
+  Indicates whether the round is complete after this win. If `true`, no further `win` callbacks will be sent for this round. If `false`, additional `win` callbacks may follow.
+</ParamField>
+
+<ParamField body="isCall" type="boolean" required>
+  If `true`, the player is currently in a bonus call event.
+</ParamField>
+
+<ParamField body="timestamp" type="number" required>
+  Unix timestamp of the request.
+</ParamField>
+
+## Response fields
+
+Your server must respond with HTTP 200 and a JSON body containing the following fields:
+
+<ResponseField name="balance" type="number" required>
+  The player's updated balance after the win amount is credited.
+</ResponseField>
+
+<ResponseField name="statusCode" type="string" required>
+  Result of the operation. Must be `"OK"` on success. See the status codes table below for all possible values.
+</ResponseField>
+
+## Status codes
+
+| Status code | Description |
+| :-- | :-- |
+| `OK` | Request successful |
+| `ERR_INTEGRITY_CHECK_FAILED` | Message integrity check failed |
+| `ERR_NOT_AUTHENTICATED` | The player is not authenticated |
+| `ERR_UNKNOWN` | Internal server error |
+
+<Warning>
+  Your response must be returned within **4 seconds**. If the request times out or returns an error, Scorpio Play will automatically retry the request up to **2 more times**.
+</Warning>
+
+## Examples
+
+<CodeGroup>
+
+```json Request
+{
+  "command": "win",
+  "transactionId": "SP215202",
+  "playerId": "1101",
+  "roundId": "65215842315484512",
+  "providerId": 2,
+  "providerName": "EGT Digital",
+  "gameCode": "FSHBLSlot",
+  "gameName": "40 Burning Hot Bell Link",
+  "currency": "EUR",
+  "amount": 100,
+  "isRoundFinished": true,
+  "isCall": false,
+  "timestamp": 1586335186372
+}
+```
+
+```json Success response
+{
+  "balance": 19839891,
+  "statusCode": "OK"
+}
+```
+
+```json Error response
+{
+  "statusCode": "ERR_UNKNOWN",
+  "balance": 19839880
+}
+```
+
+</CodeGroup>

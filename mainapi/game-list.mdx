@@ -1,0 +1,95 @@
+---
+title: "Get Game List"
+---
+
+Use this endpoint to retrieve all games available to your operator account from a specific provider. The response includes the game code (used to launch a game), display name, thumbnail image URL, game type, and maintenance status. You can use this data to populate your game lobby UI and filter or badge games by type or availability.
+
+## Request
+
+```bash
+GET /v1/game/list/:providerId
+```
+
+### Headers
+
+| Name | Value |
+| :-- | :-- |
+| `Authorization` | `Bearer <API_TOKEN>` |
+| `Content-Type` | `application/json` |
+| `Accept` | `application/json` |
+
+### Path Parameters
+
+<ParamField path="providerId" type="number" required>
+  The unique identifier of the provider whose game catalog you want to retrieve. You can get a list of valid provider IDs from [List Providers](https://skysoft-e628c952.mintlify.app/api-reference/games/provider-list).
+</ParamField>
+
+## Example Request
+
+```bash
+curl --request GET \
+  --url "https://api.scorpioplay.com/v1/game/list/1" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/json"
+```
+
+## Response
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "message": "OK",
+  "data": [
+    {
+      "gameID": "vswaysdogs",
+      "gameName": "The Dog House Megaways",
+      "gameImage": "https://contents.example.com/imgae/120*120/1.png",
+      "gameType": 0,
+      "inMaintenance": false
+    }
+  ]
+}
+```
+
+### Response Fields
+
+<ResponseField name="success" type="boolean">
+  Indicates whether the API call succeeded.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Textual confirmation of the API call result (e.g., `"OK"`).
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  Array of game objects available from the specified provider.
+
+  <Expandable title="data[]">
+    <ResponseField name="gameID" type="string">
+      Unique game identifier (game code). Pass this value as `gameCode` when calling [Launch Game](https://skysoft-e628c952.mintlify.app/api-reference/games/game-launch).
+    </ResponseField>
+
+    <ResponseField name="gameName" type="string">
+      Display name of the game, suitable for use in your lobby UI.
+    </ResponseField>
+
+    <ResponseField name="gameImage" type="string">
+      URL of the game's thumbnail image. Recommended dimensions are 120×120 pixels.
+    </ResponseField>
+
+    <ResponseField name="gameType" type="number">
+      Category of the game. Possible values:
+
+      - `0` — Slot
+      - `1` — Live
+      - `2` — Other
+    </ResponseField>
+
+    <ResponseField name="inMaintenance" type="boolean">
+      Whether the game is currently under maintenance. When `true`, the game cannot be launched and you should hide or disable it in your lobby.
+    </ResponseField>
+  </Expandable>
+</ResponseField>

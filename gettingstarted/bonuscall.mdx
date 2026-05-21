@@ -1,0 +1,91 @@
+---
+title: "Bonus Call"
+---
+
+The Bonus Call feature lets you apply temporary bonuses to a player's active game session without touching your agent points balance. Whether you want to reward new players with free spins or run a guaranteed-win promotion for retention, Bonus Call gives you a controlled mechanism to deliver those incentives through real gameplay rather than direct wallet credits.
+
+## Bonus types
+
+Scorpio Play supports two distinct types of bonus calls. Choose based on whether you want to offer risk-free spins or guarantee a specific winning outcome.
+
+<Tabs>
+  <Tab title="Free Spin Bonus">
+    A Free Spin Bonus grants a player a fixed number of free spins on a specific game. The spins are played out through the game engine just like normal spins, but the player's wallet is never charged — any wins are credited to their wallet automatically.
+
+    Key characteristics:
+
+    - A fixed number of spins is assigned to the player for a specific game
+    - Each spin does **not** deduct funds from the player's wallet
+    - Wins generated from free spins are credited to the player's wallet automatically
+    - The bet amount per spin and total spin count are predefined by you as the operator
+    - The outcome of each spin is determined by normal game RTP mechanics — wins are not guaranteed
+
+    **Typical use cases:** welcome promotions, onboarding campaigns, re-engagement incentives for lapsed players.
+  </Tab>
+  <Tab title="Regular Bonus Call">
+    A Regular Bonus Call guarantees a specific winning amount for a player, delivered through actual gameplay execution rather than a direct wallet credit. The system runs real spins — including normal spins and any triggered bonus rounds — until the predefined target winning amount is reached.
+
+    Key characteristics:
+
+    - A predefined **target winning amount** is guaranteed to be delivered to the player
+    - The bonus is fulfilled through randomized gameplay, including normal spins and bonus rounds if triggered
+    - Spin count and spin type are determined dynamically by the game engine
+    - Each spin **deducts funds from the player's wallet**, exactly like a normal paid spin
+    - The system continues spinning until the total winnings meet the guaranteed bonus amount
+    - All bet and win transactions are recorded as standard game transactions
+
+    **How it works, step by step:**
+
+    1. You initiate a Regular Bonus Call with a target winning amount
+    2. The system executes real spins using the game engine
+    3. Each spin deducts the bet amount from the player's wallet
+    4. Wins from spins and bonus rounds are credited to the wallet normally
+    5. The process continues until the guaranteed winning amount is fully delivered
+
+    **Typical use cases:** guaranteed win promotions, player retention campaigns with controlled payout, compensation scenarios where winnings must follow normal RTP behavior, promotional events requiring real gameplay interaction.
+  </Tab>
+</Tabs>
+
+## Comparison
+
+| Feature | Free Spin Bonus | Regular Bonus Call |
+| :-- | :-- | :-- |
+| Wallet balance used | No | Yes |
+| Guaranteed outcome | No (win depends on spin results) | Yes (target win amount) |
+| Gameplay execution | Yes | Yes |
+| Spin type | Free spins only | Normal spins and bonus rounds |
+| Bet deducted per spin | No | Yes |
+| Operator control | Spin count | Target win amount |
+
+## How to use
+
+**Registering a bonus call**
+
+Call `POST /v1/bonus-call/register` to initiate a bonus for a player. In the request, specify the bonus type (`FreeSpin` or `Regular`) along with the required parameters for that type — spin count and bet amount for Free Spin Bonus, or target winning amount for Regular Bonus Call. Once registered, the bonus becomes active for the player's current or next game session.
+
+**Canceling a bonus call**
+
+If a bonus is still in progress and has not yet been completed, you can cancel it by calling `POST /v1/bonus-call/cancel`. Once a bonus has been fully delivered, it cannot be canceled.
+
+See the [Register Bonus](https://skysoft-e628c952.mintlify.app/api-reference/bonus/register) and [Cancel Bonus](https://skysoft-e628c952.mintlify.app/api-reference/bonus/cancel) API reference pages for full request and response schemas.
+
+## Bonus call lifecycle rules
+
+<AccordionGroup>
+  <Accordion title="Free Spin Bonus lifecycle">
+    Free Spin Bonuses have a predefined expiration time set at the time of registration.
+
+    - If the player does not use all of their free spins before the expiration time, the bonus is automatically expired by the system
+    - Any unused spins remaining at expiration are forfeited and cannot be recovered
+    - Wins from spins used before expiration are unaffected and remain credited to the player's wallet
+  </Accordion>
+
+  <Accordion title="Regular Bonus Call lifecycle">
+    A Regular Bonus Call remains active until one of two conditions is met:
+
+    - The **full target winning amount** has been delivered to the player through gameplay, or
+    - The bonus reaches its **expiration time** before the target is met
+
+    While active, the bonus must either complete naturally or be manually canceled via `POST /v1/bonus-call/cancel`. An incomplete Regular Bonus Call that reaches its expiration will be closed by the system automatically.
+  </Accordion>
+</AccordionGroup>

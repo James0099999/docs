@@ -1,0 +1,141 @@
+---
+title: "Bonus Call Register"
+---
+
+The register endpoint starts a bonus campaign for a specific player. You specify whether it's a Free Spin Bonus (predefined free spins) or a Regular Bonus Call (a guaranteed winning amount). Only one active bonus call can run per player at a time. Once the bonus completes in one of the configured games, it will not be triggered again for any other game in the same registration.
+
+## Request
+
+**Endpoint:** `POST /v1/bonus-call/register`
+
+**Headers**
+
+| Name | Value |
+| :-- | :-- |
+| `Authorization` | `Bearer <API_TOKEN>` |
+| `Content-Type` | `application/json` |
+| `Accept` | `application/json` |
+
+### Path parameters
+
+None.
+
+### Request body
+
+<ParamField body="issueId" type="string">
+  Your own unique identifier for this bonus request. If omitted, the API generates one. Use this to correlate the returned `issueId` with your own records.
+</ParamField>
+
+<ParamField body="providerId" type="number" required>
+  The numeric ID of the game provider under which the bonus will be active.
+</ParamField>
+
+<ParamField body="gameCode" type="string | string[]" required>
+  Specifies which games can trigger the bonus event.
+
+  - Pass an **array of game codes** (e.g., `["vs20olympx", "vswaysdogs"]`) to restrict the bonus to specific titles. The bonus activates when the player opens any one of the listed games.
+  - Pass `"all"` to allow any game under the selected provider to trigger the bonus.
+</ParamField>
+
+<ParamField body="playerExternalId" type="string" required>
+  The player's unique identifier in your system.
+</ParamField>
+
+<ParamField body="currency" type="string" required>
+  ISO currency code for the bonus (e.g., `"USD"`).
+</ParamField>
+
+<ParamField body="bonusType" type="number" required>
+  The type of bonus to register.
+
+  - `1` — Regular Bonus Call. The player is guaranteed to win the `callAmount` by the end of the campaign.
+  - `2` — Free Spin Bonus. The player receives a set number of free spins; `callAmount` acts as the maximum win cap. Available for Pragmatic Play and EGT Digital only.
+</ParamField>
+
+<ParamField body="callAmount" type="number" required>
+  The monetary value associated with the bonus.
+
+  - For `bonusType = 1`: the player will win exactly this amount.
+  - For `bonusType = 2`: the maximum amount the player can win across all free spins.
+</ParamField>
+
+<ParamField body="expireAt" type="string" required>
+  The timestamp at which the bonus expires, in `YYYY-MM-DD HH:mm:ss` format (e.g., `"2026-12-01 23:59:59"`).
+</ParamField>
+
+<ParamField body="metaData" type="object">
+  Additional configuration for the bonus. Required when `bonusType = 2`.
+
+  <Expandable title="metaData fields">
+    <ParamField body="metaData.spinAmount" type="number" required>
+      Number of free spins to award. Minimum: `10`, Maximum: `100`.
+    </ParamField>
+
+    <ParamField body="metaData.baseBetAmount" type="number" required>
+      The bet amount applied to each free spin. For example, set `2` for a 2 USD free spin.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+### Example request
+
+```bash
+curl --request POST \
+  --url https://api.scorpioplay.com/v1/bonus-call/register \
+  --header 'Authorization: Bearer <API_TOKEN>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "issueId": "promo_oct_001",
+    "providerId": 1,
+    "gameCode": ["vs20olympx", "vswaysdogs"],
+    "playerExternalId": "player_99182",
+    "currency": "USD",
+    "bonusType": 2,
+    "callAmount": 500,
+    "expireAt": "2026-12-01 23:59:59",
+    "metaData": {
+      "spinAmount": 20,
+      "baseBetAmount": 2
+    }
+  }'
+```
+
+<Note>
+  For a Regular Bonus Call (`bonusType = 1`), you can omit `metaData` entirely. For a Free Spin Bonus (`bonusType = 2`), both `metaData.spinAmount` and `metaData.baseBetAmount` are required.
+</Note>
+
+---
+
+## Response
+
+On success, the API returns the `issueId` you should store to track or cancel the bonus later.
+
+<ResponseField name="success" type="boolean">
+  `true` when the API call was processed without errors.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  A short confirmation string, typically `"OK"`.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  The result payload.
+
+  <Expandable title="data fields">
+    <ResponseField name="data.issueId" type="string">
+      The unique identifier for the registered bonus call. Store this value — you need it to check status or cancel the bonus.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+### Example response
+
+```json
+{
+  "success": true,
+  "message": "OK",
+  "data": {
+    "issueId": "issueId_001"
+  }
+}
+```

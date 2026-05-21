@@ -1,0 +1,82 @@
+---
+title: "Balance"
+---
+
+Scorpio Play sends the `balance` callback when a player launches a game and every minute during gameplay to keep their displayed balance up to date. Before returning the player's balance, you must verify that the player's session is still active and authenticated. Any status code other than `OK` terminates the current process flow and displays an error message to the player.
+
+- **URL:** Your configured Callback URL
+- **Method:** POST
+- **Headers:** `X-Request-Signature`, `Content-Type`, `Accept`
+
+## Request parameters
+
+<ParamField body="command" type="string" required>
+  Always `"balance"` for this callback type.
+</ParamField>
+
+<ParamField body="playerId" type="string" required>
+  Unique identifier of the player from your system.
+</ParamField>
+
+<ParamField body="currency" type="string" required>
+  Player currency code per ISO-4217 (e.g., `EUR`, `USD`).
+</ParamField>
+
+<ParamField body="timestamp" type="number" required>
+  Unix timestamp of the request.
+</ParamField>
+
+## Response fields
+
+Your server must respond with HTTP 200 and a JSON body containing the following fields:
+
+<ResponseField name="balance" type="number">
+  The player's current balance.
+</ResponseField>
+
+<ResponseField name="statusCode" type="string" required>
+  Result of the operation. Must be `"OK"` on success. See the status codes table below for all possible values.
+</ResponseField>
+
+## Status codes
+
+| Status code | Description |
+| :-- | :-- |
+| `OK` | Request successful |
+| `ERR_INVALID_ACCOUNT` | The player's currency does not match the currency code in the request |
+| `ERR_NOT_AUTHENTICATED` | The player is not authenticated |
+| `ERR_INVALID_PLAYER_ID` | The player ID is invalid |
+| `ERR_INTEGRITY_CHECK_FAILED` | Message integrity check failed |
+| `ERR_UNKNOWN` | Internal server error |
+
+<Note>
+  Any status code other than `OK` is treated as unsuccessful. No retry will be scheduled — the current process flow is terminated immediately and an error message is shown to the player.
+</Note>
+
+## Examples
+
+<CodeGroup>
+
+```json Request
+{
+  "command": "balance",
+  "playerId": "1101",
+  "currency": "EUR",
+  "timestamp": 1586335186372
+}
+```
+
+```json Success response
+{
+  "balance": 19839891,
+  "statusCode": "OK"
+}
+```
+
+```json Error response
+{
+  "statusCode": "ERR_INVALID_ACCOUNT"
+}
+```
+
+</CodeGroup>

@@ -1,0 +1,83 @@
+---
+title: "Fundamentals"
+---
+
+Before you can make your first API call, you need a valid API token, the correct HTTP headers on every request, and a server IP address registered in the back office. This page covers those prerequisites along with the system security limits, the agent/operator hierarchy, and how the balance system works.
+
+## What you need to start
+
+To use the Scorpio Play API you need an `API_TOKEN` issued by Scorpio Play administrators. This token is your identity credential for every API request — treat it like a password and never expose it in client-side code or public repositories.
+
+An `API_TOKEN` looks like this:
+
+```text
+ed45553e-1702-4342-a70d-09bf7ff7f568
+```
+
+You can find your token in **Settings** inside the Scorpio Play back office once your account is provisioned.
+
+<Note>
+  Each account is designated for a single currency. If you need to support multiple currencies, you will need separate accounts for each one.
+</Note>
+
+To get an account, [contact Scorpio Play](https://scorpioplay.com/contact).
+
+## HTTP headers
+
+Every API request must include the following three HTTP headers. You can verify your `API_TOKEN` value in the manager account's settings page in the back office.
+
+| Name | Value | Example |
+| :-- | :-- | :-- |
+| `Authorization` | `Bearer {API_TOKEN}` | `Authorization: Bearer ed45553e-1702-4342-a70d-09bf7ff7f568` |
+| `Accept` | `application/json` | `Accept: application/json` |
+| `Content-Type` | `application/json` | `Content-Type: application/json` |
+
+Here is an example request using these headers:
+
+```bash
+curl --request GET \
+  --url https://api.scorpioplay.com/v1/operator/info \
+  --header "Authorization: Bearer ed45553e-1702-4342-a70d-09bf7ff7f568" \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/json"
+```
+
+## System security
+
+Simultaneous calls from the same agent are limited to **50 concurrent requests**. If you exceed this limit, the API returns the error code `SERVER_IS_BUSY (1018)`.
+
+<Warning>
+  When you receive `SERVER_IS_BUSY (1018)`, do not retry immediately. Wait for your existing in-flight requests to complete before sending new ones.
+</Warning>
+
+## IP restriction
+
+The API only accepts requests from server IP addresses that you register in the **\[Settings\]** page of the back office. Enter each allowed IP address separated by a space or a newline, for example:
+
+```text
+1.1.1.1 2.2.2.2
+```
+
+<Note>
+  If you leave the **\[Allowed IP\]** field blank, the API accepts requests from any IP address. For production environments, restricting by IP is strongly recommended.
+</Note>
+
+## Agent and operator hierarchy
+
+The API uses a two-level hierarchy to model how operators are organized:
+
+- An **Agent** is a single casino website operator. Each agent has its own back-office account and manages its own players.
+- An **Operator** manages multiple agents in a hierarchy. As an operator, you can create as many sub-agents as you need and oversee all agents under your supervision.
+- A **Broker** sits above operators and can create and manage multiple operators under their management.
+
+This hierarchy means points and permissions flow downward: brokers provision operators, and operators provision the agents beneath them.
+
+## Balance system
+
+Each agent is assigned a digital wallet in the Scorpio Play system. The credits in this wallet are called **points**. Points are the currency that agents spend to run casino operations — without sufficient points in your wallet, you cannot operate your casino.
+
+Points are distributed from parent operators to their agents. When you need to top up your wallet, you request points from the operator above you in the hierarchy. This keeps the flow of credits traceable and controlled at every level of the system.
+
+<Tip>
+  If you are just getting started and your wallet balance is zero, contact your parent operator or [reach out to Scorpio Play](https://scorpioplay.com/contact) to have points allocated to your account.
+</Tip>

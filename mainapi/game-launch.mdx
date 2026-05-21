@@ -1,0 +1,106 @@
+---
+title: "Game Launch"
+---
+
+This endpoint generates a secure game launch URL for a specified player and game. Once you have the URL, you can open it in an iframe embedded in your site or redirect the player directly to it in a new tab. Each call produces a session-specific URL tied to the player, provider, and game you supply.
+
+## Request
+
+```bash
+POST /v1/game/launch
+```
+
+### Headers
+
+| Name | Value |
+| :-- | :-- |
+| `Authorization` | `Bearer <API_TOKEN>` |
+| `Content-Type` | `application/json` |
+| `Accept` | `application/json` |
+
+### Request Body
+
+<ParamField body="playerExternalId" type="string" required>
+  Your unique identifier for the player on your system. This links the game session back to the player's account in your platform.
+</ParamField>
+
+<ParamField body="providerId" type="number" required>
+  The unique identifier of the game provider. Retrieve valid provider IDs from [List Providers](https://skysoft-e628c952.mintlify.app/api-reference/games/provider-list).
+</ParamField>
+
+<ParamField body="gameCode" type="string" required>
+  The unique code of the game to launch. Retrieve valid game codes from [List Games](https://skysoft-e628c952.mintlify.app/api-reference/games/game-list).
+</ParamField>
+
+<ParamField body="language" type="string" required>
+  Language code for the game interface (e.g., `en`). The game UI will be rendered in this language where supported by the provider.
+</ParamField>
+
+<ParamField body="currency" type="string" required>
+  Currency code used for gameplay (e.g., `USD`). Must match a currency configured for the provider on your account.
+</ParamField>
+
+<ParamField body="returnUrl" type="string">
+  URL to redirect the player after they exit the game. If omitted, the game's default exit behavior is used.
+</ParamField>
+
+<ParamField body="rtp" type="number" required>
+  Requested RTP (Return to Player) percentage for the game session. Pass `0` to use your operator's global RTP setting configured in your account.
+</ParamField>
+
+## Example Request
+
+```bash
+curl --request POST \
+  --url https://api.scorpioplay.com/v1/game/launch \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "playerExternalId": "playerId_onOperatorSide",
+    "providerId": 1,
+    "gameCode": "vswaysdogs",
+    "language": "en",
+    "currency": "USD",
+    "returnUrl": "https://yourcasino.com/lobby",
+    "rtp": 0
+  }'
+```
+
+## Response
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "message": "OK",
+  "data": {
+    "gameUrl": "https://games.scorpioplay.com/launch?token=abc123..."
+  }
+}
+```
+
+### Response Fields
+
+<ResponseField name="success" type="boolean">
+  Indicates whether the request was processed successfully.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Result message of the request (e.g., `"OK"`).
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  Object containing the game launch data.
+
+  <Expandable title="data">
+    <ResponseField name="gameUrl" type="string">
+      The secure URL used to launch the game session. Open this in an iframe or redirect the player to it. This URL is session-specific and should be used immediately after generation.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<Tip>
+  Set `rtp` to `0` to apply your operator's global RTP setting as configured in your Scorpio Play account. Only specify a non-zero value if you want to override the RTP for this specific session and the provider supports per-session RTP configuration.
+</Tip>
