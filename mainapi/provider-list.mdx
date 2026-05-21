@@ -2,7 +2,7 @@
 title: "Get Provider List"
 ---
 
-Use this endpoint to retrieve all game providers that are enabled on your operator account. The response includes each provider's unique ID, display name, logo URL, and current status. You'll use the `providerId` values returned here in subsequent calls such as [List Games](https://skysoft-e628c952.mintlify.app/api-reference/games/game-list) and [Provider Settings](https://skysoft-e628c952.mintlify.app/api-reference/games/provider-settings).
+Use this endpoint to retrieve all game providers that are enabled on your operator account. The response includes each provider's unique ID, display name. You'll use the `providerId` values returned here in subsequent calls such as [List Games](https://skysoft-e628c952.mintlify.app/api-reference/games/game-list).
 
 ## Request
 
@@ -24,7 +24,7 @@ This endpoint takes no query parameters or request body.
 
 ```bash
 curl --request GET \
-  --url https://api.scorpioplay.com/v1/provider/list \
+  --url https://api.igamingace.com/v1/provider/list \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Accept: application/json" \
   --header "Content-Type: application/json"
@@ -41,9 +41,11 @@ curl --request GET \
   "data": [
     {
       "providerId": 1,
-      "providerName": "Pragmatic Play",
-      "logo": "https://cdn.example.com/logos/pragmaticplay.png",
-      "status": 1
+      "providerName": "Pragmatic Play"
+    },
+    {
+      "providerId": 2,
+      "providerName": "PG Soft"
     }
   ]
 }
@@ -69,14 +71,6 @@ curl --request GET \
 
     <ResponseField name="providerName" type="string">
       Display name of the provider (e.g., `"Pragmatic Play"`).
-    </ResponseField>
-
-    <ResponseField name="logo" type="string">
-      URL of the provider's logo image. Suitable for display in your game lobby UI.
-    </ResponseField>
-
-    <ResponseField name="status" type="number">
-      Provider status on your account. `1` = active, `0` = inactive.
     </ResponseField>
   </Expandable>
 </ResponseField>

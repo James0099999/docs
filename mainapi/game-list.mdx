@@ -7,7 +7,7 @@ Use this endpoint to retrieve all games available to your operator account from 
 ## Request
 
 ```bash
-GET /v1/game/list/:providerId
+GET /v1/gamelist/:providerId
 ```
 
 ### Headers
@@ -28,7 +28,7 @@ GET /v1/game/list/:providerId
 
 ```bash
 curl --request GET \
-  --url "https://api.scorpioplay.com/v1/game/list/1" \
+  --url "https://api.igamingace.com/v1/gamelist/1" \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Accept: application/json" \
   --header "Content-Type: application/json"
@@ -44,11 +44,15 @@ curl --request GET \
   "message": "OK",
   "data": [
     {
-      "gameID": "vswaysdogs",
-      "gameName": "The Dog House Megaways",
-      "gameImage": "https://contents.example.com/imgae/120*120/1.png",
-      "gameType": 0,
-      "inMaintenance": false
+      "gameID": 644,
+      "gameName": "Launch to Riches",
+	  "gameSymbol": "vswaysrocktrls",
+      "gameImage": "https://statics.igamingace.com/images/vswaysrocktrls.png",
+	  "freeBonusMeta": {
+			"betUnit": 0.2,
+			"maxMultiple": 1250
+	   },
+	  "publishDate": "2026-04-29"
     }
   ]
 }
@@ -69,27 +73,23 @@ curl --request GET \
 
   <Expandable title="data[]">
     <ResponseField name="gameID" type="string">
-      Unique game identifier (game code). Pass this value as `gameCode` when calling [Launch Game](https://skysoft-e628c952.mintlify.app/api-reference/games/game-launch).
+      Unique game identifier (game id). Pass this value as `gameId` when calling [Launch Game](https://skysoft-e628c952.mintlify.app/api-reference/games/game-launch).
     </ResponseField>
 
     <ResponseField name="gameName" type="string">
       Display name of the game, suitable for use in your lobby UI.
     </ResponseField>
 
+    <ResponseField name="gameSymbol" type="string">
+      Unique game symbol string.
+    </ResponseField>
+
     <ResponseField name="gameImage" type="string">
-      URL of the game's thumbnail image. Recommended dimensions are 120×120 pixels.
+      URL of the game's thumbnail image.
     </ResponseField>
 
-    <ResponseField name="gameType" type="number">
-      Category of the game. Possible values:
-
-      - `0` — Slot
-      - `1` — Live
-      - `2` — Other
-    </ResponseField>
-
-    <ResponseField name="inMaintenance" type="boolean">
-      Whether the game is currently under maintenance. When `true`, the game cannot be launched and you should hide or disable it in your lobby.
+    <ResponseField name="freeBonusMeta" type="object">
+      This is for bonus call (free game). When creating free games, operators should specify base bet amount for free game which should be multiple of “betUnit” and should be less than “maxMultiple”.
     </ResponseField>
   </Expandable>
 </ResponseField>
