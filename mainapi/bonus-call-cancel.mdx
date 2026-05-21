@@ -18,7 +18,11 @@ Use this endpoint to terminate an in-progress bonus call before it finishes natu
 
 ### Request body
 
-<ParamField body="issueId" type="string" required>
+<ParamField body="playerId" type="string" required>
+  The unique identifier of the player.
+</ParamField>
+
+<ParamField body="issueId" type="long" required>
   The unique identifier of the bonus call to cancel, as returned by the [Register Bonus](https://skysoft-e628c952.mintlify.app/api-reference/bonus/register) endpoint.
 </ParamField>
 
@@ -26,11 +30,11 @@ Use this endpoint to terminate an in-progress bonus call before it finishes natu
 
 ```bash
 curl --request POST \
-  --url https://api.scorpioplay.com/v1/bonus-call/cancel \
+  --url https://api.igamingace.com/v1/bonus-call/cancel \
   --header 'Authorization: Bearer <API_TOKEN>' \
   --header 'Content-Type: application/json' \
   --data '{
-    "issueId": "i3746"
+    "issueId": 9887
   }'
 ```
 

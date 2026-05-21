@@ -30,20 +30,8 @@ The `win` callback is sent when a player wins a round. Your server must credit t
   Unique identifier of the game provider in Scorpio Play.
 </ParamField>
 
-<ParamField body="providerName" type="string" required>
-  Name of the game provider.
-</ParamField>
-
-<ParamField body="gameCode" type="string" required>
-  Unique identifier of the game in Scorpio Play.
-</ParamField>
-
-<ParamField body="gameName" type="string" required>
-  Display name of the game.
-</ParamField>
-
-<ParamField body="currency" type="string" required>
-  Player currency code per ISO-4217 (e.g., `EUR`, `USD`).
+<ParamField body="gameCode" type="number" required>
+  Unique game id of the game in iGamingAce.
 </ParamField>
 
 <ParamField body="amount" type="number" required>
@@ -54,8 +42,8 @@ The `win` callback is sent when a player wins a round. Your server must credit t
   Indicates whether the round is complete after this win. If `true`, no further `win` callbacks will be sent for this round. If `false`, additional `win` callbacks may follow.
 </ParamField>
 
-<ParamField body="isCall" type="boolean" required>
-  If `true`, the player is currently in a bonus call event.
+<ParamField body="bonusId" type="long" required>
+  0: no bonus, else the bonus id related
 </ParamField>
 
 <ParamField body="timestamp" type="number" required>
@@ -97,14 +85,11 @@ Your server must respond with HTTP 200 and a JSON body containing the following 
   "transactionId": "SP215202",
   "playerId": "1101",
   "roundId": "65215842315484512",
-  "providerId": 2,
-  "providerName": "EGT Digital",
-  "gameCode": "FSHBLSlot",
-  "gameName": "40 Burning Hot Bell Link",
-  "currency": "EUR",
+  "providerId": 1,
+  "gameCode": 655,
   "amount": 100,
   "isRoundFinished": true,
-  "isCall": false,
+  "bonusId": 0,
   "timestamp": 1586335186372
 }
 ```

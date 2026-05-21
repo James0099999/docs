@@ -18,10 +18,6 @@ The `cancel` callback is sent when a player's bet fails to complete — due to n
   Unique reference of this cancel transaction created in Scorpio Play. Use this to enforce idempotency.
 </ParamField>
 
-<ParamField body="referenceId" type="string" required>
-  The `transactionId` of the original bet transaction being cancelled. Use this to look up the bet you need to reverse in your system.
-</ParamField>
-
 <ParamField body="playerId" type="string" required>
   Unique identifier of the player from your system.
 </ParamField>
@@ -34,24 +30,8 @@ The `cancel` callback is sent when a player's bet fails to complete — due to n
   Unique identifier of the game provider in Scorpio Play.
 </ParamField>
 
-<ParamField body="providerName" type="string" required>
-  Name of the game provider.
-</ParamField>
-
-<ParamField body="gameCode" type="string" required>
-  Unique identifier of the game in Scorpio Play.
-</ParamField>
-
-<ParamField body="gameName" type="string" required>
-  Display name of the game.
-</ParamField>
-
-<ParamField body="currency" type="string" required>
-  Player currency code per ISO-4217 (e.g., `EUR`, `USD`).
-</ParamField>
-
-<ParamField body="amount" type="number" required>
-  The refund amount to credit back to the player's balance. This matches the original bet amount.
+<ParamField body="gameCode" type="number" required>
+  Unique game id of the game in iGamingAce.
 </ParamField>
 
 <ParamField body="timestamp" type="number" required>
@@ -100,12 +80,8 @@ Your server must respond with HTTP 200 and a JSON body containing the following 
   "referenceId": "SP215201",
   "playerId": "1101",
   "roundId": "65215842315484512",
-  "providerId": 2,
-  "providerName": "EGT Digital",
-  "gameCode": "FSHBLSlot",
-  "gameName": "40 Burning Hot Bell Link",
-  "currency": "EUR",
-  "amount": 10,
+  "providerId": 1,
+  "gameCode": 655,
   "timestamp": 1586335186372
 }
 ```

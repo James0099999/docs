@@ -21,7 +21,7 @@ POST /v1/game/launch
 ### Request Body
 
 <ParamField body="playerId" type="string" required>
-  Your unique identifier for the player on your system. 
+  Your unique identifier for the player on your system.
 </ParamField>
 
 <ParamField body="providerId" type="number" required>
@@ -40,7 +40,7 @@ POST /v1/game/launch
   URL to redirect the player after they exit the game.
 </ParamField>
 
-<ParamField body="isStreamer" type="boolean" required>
+<ParamField body="isStreamer" type="bool" required>
   If isStreamer is true, the player's report is not considered to agent’s report, and the player can have more than 100% RTP.
 </ParamField>
 
@@ -76,7 +76,7 @@ curl --request POST \
 
 ### Response Fields
 
-<ResponseField name="success" type="boolean">
+<ResponseField name="success" type="bool">
   Indicates whether the request was processed successfully.
 </ResponseField>
 

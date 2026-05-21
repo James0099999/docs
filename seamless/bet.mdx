@@ -15,7 +15,7 @@ The `bet` callback is sent when a player places a bet. Your server must deduct t
 </ParamField>
 
 <ParamField body="transactionId" type="string" required>
-  Unique reference of the transaction created in Scorpio Play. Use this to enforce idempotency.
+  Unique reference of the transaction created in iGamingAce. Use this to enforce idempotency.
 </ParamField>
 
 <ParamField body="playerId" type="string" required>
@@ -30,16 +30,8 @@ The `bet` callback is sent when a player places a bet. Your server must deduct t
   Unique identifier of the game provider in Scorpio Play.
 </ParamField>
 
-<ParamField body="providerName" type="string" required>
-  Name of the game provider.
-</ParamField>
-
 <ParamField body="gameCode" type="string" required>
   Unique identifier of the game in Scorpio Play.
-</ParamField>
-
-<ParamField body="gameName" type="string" required>
-  Display name of the game.
 </ParamField>
 
 <ParamField body="currency" type="string" required>
@@ -50,12 +42,12 @@ The `bet` callback is sent when a player places a bet. Your server must deduct t
   Bet amount to deduct from the player's balance.
 </ParamField>
 
-<ParamField body="isRoundFinished" type="boolean" required>
-  Indicates whether the round is complete after this bet. If `true`, no `win` callback will follow. If `false`, a `win` callback will be sent when the round resolves.
+<ParamField body="isBonusBusy" type="bool" required>
+  Indicates If player got the bonus or not.
 </ParamField>
 
-<ParamField body="isCall" type="boolean" required>
-  If `true`, the player is currently in a bonus call event.
+<ParamField body="bonusId" type="long" required>
+  0: no bonus, else the bonus id related
 </ParamField>
 
 <ParamField body="timestamp" type="number" required>
@@ -96,16 +88,13 @@ Your server must respond with HTTP 200 and a JSON body containing the following 
 {
   "command": "bet",
   "transactionId": "SP215202",
-  "playerId": "1101",
+  "playerId": "player_88888",
   "roundId": "65215842315484512",
-  "providerId": 2,
-  "providerName": "EGT Digital",
-  "gameCode": "FSHBLSlot",
-  "gameName": "40 Burning Hot Bell Link",
-  "currency": "EUR",
+  "providerId": 1,
+  "gameCode": 655,
   "amount": 10,
-  "isRoundFinished": true,
-  "isCall": false,
+  "isBonusBusy": false,
+  "bonusId": 0,
   "timestamp": 1586335186372
 }
 ```
