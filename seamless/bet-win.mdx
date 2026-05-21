@@ -1,3 +1,112 @@
 ---
 title: "BetWin"
 ---
+
+The `betwin` callback is sent when a player places a bet. Your server must deduct the bet amount from the player's balance and return the updated balance. This operation is idempotent — if your wallet receives more than one request with the same `transactionId`, you must register the transaction only once.
+
+- **URL:** Your configured Callback URL
+- **Method:** POST
+- **Headers:** `X-Request-Signature`, `Content-Type`, `Accept`
+
+## Request parameters
+
+<ParamField body="command" type="string" required>
+  Always `"bet"` for this callback type.
+</ParamField>
+
+<ParamField body="transactionId" type="string" required>
+  Unique reference of the transaction created in iGamingAce. Use this to enforce idempotency.
+</ParamField>
+
+<ParamField body="playerId" type="string" required>
+  Unique identifier of the player from your system.
+</ParamField>
+
+<ParamField body="roundId" type="string" required>
+  Unique reference of the game round.
+</ParamField>
+
+<ParamField body="providerId" type="number" required>
+  Unique identifier of the game provider in Scorpio Play.
+</ParamField>
+
+<ParamField body="gameCode" type="string" required>
+  Unique identifier of the game in Scorpio Play.
+</ParamField>
+
+<ParamField body="betAmount" type="number" required>
+  Player currency code per ISO-4217 (e.g., `EUR`, `USD`).
+</ParamField>
+
+<ParamField body="winAmount" type="number" required>
+  Bet amount to deduct from the player's balance.
+</ParamField>
+
+<ParamField body="bonusId" type="long" required>
+  0: no bonus, else the bonus id related
+</ParamField>
+
+<ParamField body="timestamp" type="number" required>
+  Unix timestamp of the request.
+</ParamField>
+
+## Response fields
+
+Your server must respond with HTTP 200 and a JSON body containing the following fields:
+
+<ResponseField name="balance" type="number" required>
+  The player's updated balance after the bet is deducted.
+</ResponseField>
+
+<ResponseField name="statusCode" type="string" required>
+  Result of the operation. Must be `"OK"` on success. See the status codes table below for all possible values.
+</ResponseField>
+
+## Status codes
+
+| Status code | Description |
+| :-- | :-- |
+| `OK` | Request successful |
+| `ERR_NOT_AUTHENTICATED` | The player is not authenticated |
+| `ERR_NOT_ENOUGH_MONEY` | The player's account has insufficient funds |
+| `ERR_INTEGRITY_CHECK_FAILED` | Message integrity check failed |
+| `ERR_UNKNOWN` | Internal server error |
+
+<Warning>
+  Your response must be returned within **3 seconds**. If the request times out or returns an error, Scorpio Play will **not** retry — a `cancel` callback will be sent instead to revert the game round. An unsuccessful bet also cancels the current round, preventing the player from proceeding further.
+</Warning>
+
+## Examples
+
+<CodeGroup>
+
+```json Request
+{
+  "command": "bet",
+  "transactionId": "SP215202",
+  "playerId": "player_88888",
+  "roundId": "65215842315484512",
+  "providerId": 1,
+  "gameCode": 655,
+  "betAmount": 10,
+  "winAmount": 0,
+  "bonusId": 0,
+  "timestamp": 1586335186372
+}
+```
+
+```json Success response
+{
+  "balance": 19839891,
+  "statusCode": "OK"
+}
+```
+
+```json Error response
+{
+  "statusCode": "ERR_NOT_ENOUGH_MONEY",
+  "balance": 19839895
+}
+```
+
+</CodeGroup>
