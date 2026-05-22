@@ -20,12 +20,14 @@
               "gettingstarted/fundamentals",
               "gettingstarted/seamless-wallet-api",
               "gettingstarted/bonuscall",
-              "gettingstarted/error-codes"
+              "gettingstarted/error-codes",
+              "gettingstarted/languages"
             ]
           },
           {
             "group": "Main API",
             "pages": [
+              "mainapi/overview",
               "mainapi/provider-list",
               "mainapi/game-list",
               "mainapi/game-launch",
@@ -36,6 +38,7 @@
           {
             "group": "Seamless Wallet API",
             "pages": [
+              "seamless/overview",
               "seamless/balance",
               "seamless/bet",
               "seamless/win",
