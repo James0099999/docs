@@ -14,7 +14,7 @@ The `win` callback is sent when a player wins a round. Your server must credit t
   Always `"win"` for this callback type.
 </ParamField>
 
-<ParamField body="transactionId" type="string" required>
+<ParamField body="transactionId" type="long" required>
   Unique reference of the transaction created in iGamingAce. Use this to enforce idempotency.
 </ParamField>
 
@@ -22,7 +22,7 @@ The `win` callback is sent when a player wins a round. Your server must credit t
   Unique identifier of the player from your system.
 </ParamField>
 
-<ParamField body="roundId" type="string" required>
+<ParamField body="roundId" type="long" required>
   Unique reference of the game round.
 </ParamField>
 

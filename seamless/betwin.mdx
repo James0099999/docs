@@ -14,7 +14,7 @@ The `betwin` callback is sent when a player's bet and its outcome in a single at
   Always `"betwin"` for this callback type.
 </ParamField>
 
-<ParamField body="transactionId" type="string" required>
+<ParamField body="transactionId" type="long" required>
   Unique reference of the transaction created in iGamingAce. Use this to enforce idempotency.
 </ParamField>
 
@@ -22,7 +22,7 @@ The `betwin` callback is sent when a player's bet and its outcome in a single at
   Unique identifier of the player from your system.
 </ParamField>
 
-<ParamField body="roundId" type="string" required>
+<ParamField body="roundId" type="long" required>
   Unique reference of the game round.
 </ParamField>
 
@@ -30,8 +30,8 @@ The `betwin` callback is sent when a player's bet and its outcome in a single at
   Unique identifier of the game provider in iGamingAce.
 </ParamField>
 
-<ParamField body="gameCode" type="string" required>
-  Unique identifier of the game in iGamingAce.
+<ParamField body="gameCode" type="int" required>
+  Unique game id of the game in iGamingAce.
 </ParamField>
 
 <ParamField body="betAmount" type="number" required>
