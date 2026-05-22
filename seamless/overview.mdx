@@ -10,40 +10,13 @@ Our API expects HTTP Status code `200` for all requests successful or not. All o
 
 | Key | Value | Description |
 | :-- | :-- | :-- |
-| `X-Request-Signature` | `Hash string` | Signature string issued by our API. <br />For more information, please read Security section. |
+| `X-Request-Signature` | `Hash string` | `Signature string issued by our API. ` |
 | `Accept` | `application/json` | `Accept: application/json` |
 | `Content-Type` | `application/json` | `Content-Type: application/json` |
 
 ## **Verifying Callback Request Signature**
 
 The `X-Request-Signature` header is used to ensure the authenticity and integrity of the API request. It contains a **Base64-encoded HMAC-SHA512 hash**, which the operator must generate using the request body and their secret API token (`API_TOKEN`).
-
-1. Extract all keys and values from the request body
-   - The request body must be a flat JSON object (no nested objects).
-   - Example request body
-   ```bash
-   {
-     "amount": 1500,
-     "currency": "USD",
-     "playerId": "user123",
-     "timestamp": 1713792000
-   }
-   ```
-2. Sort the keys alphabetically
-   - Sorted keys: `["amount", "currency", "playerId", "timestamp"]`
-3. Get the corresponding values in sorted key order
-   - Values: `["1500", "USD", "user123", "1713792000"]`
-4. Join the values with a comma(`"1500,USD,user123,1713792000"`)
-5. Generate base64 encoded HMAC-SHA512 hash of the string using `API_TOKEN` as the key
-   ```javascript
-   const crypto = require('crypto');
-   const apiToken = "my_super_secret_token";
-   const data = "1500,USD,user123,1713792000";
-   const hmac = crypto.createHmac('sha512', apiToken)
-                      .update(data)
-                      .digest('base64');
-   ```
-6. Compare the hash string you generated with the value provided in the `X-Request-Signature` header. If they do not match, it indicates that the request may have been altered or tampered with by a malicious actor.
 
 1. Extract all keys and values from the request body
    - The request body must be a flat JSON object (no nested objects).
