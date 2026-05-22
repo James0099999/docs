@@ -6,7 +6,7 @@ Seamless Integration lets you manage your players' balances directly in your own
 
 ## Basic insights
 
-Seamless Integration is built around a bidirectional flow: your casino calls the iGamingAce API to launch games, and Scorpio Play calls your backend to read and write player balances during gameplay.
+Seamless Integration is built around a bidirectional flow: your casino calls the iGamingAce API to launch games, and iGamingAce calls your backend to read and write player balances during gameplay.
 
 - iGamingAce sends callback requests to your server to retrieve each player's current balance and verify their authority before processing bets
 - Your backend is updated on every bet and win, keeping balances in sync in real time
@@ -18,7 +18,7 @@ Seamless Integration is built around a bidirectional flow: your casino calls the
 
 <Steps>
   <Step title="Creating players">
-    Before a player can launch any game, you must link them to the iGamingAce API so the system can identify who is playing. Your existing casino user table is not automatically visible to Scorpio Play — you need to explicitly create the association.
+    Before a player can launch any game, you must link them to the iGamingAce API so the system can identify who is playing. Your existing casino user table is not automatically visible to iGamingAce — you need to explicitly create the association.
 
     Once a player is linked, iGamingAce assigns them a unique integer called `playerId`. This becomes the player's permanent identifier within our system and can be referenced in all subsequent API calls.
 
