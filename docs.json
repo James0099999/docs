@@ -71,5 +71,8 @@
      "cursor",
      "vscode"
    ]
+  },
+  "appearance": {
+    "strict": true
   }
 }
