@@ -12,7 +12,8 @@
     "tabs": [
       {
         "tab": "iGamingAce API",
-        "groups": [
+        "pages": [
+          "welcome",
           {
             "group": "Getting Started",
             "pages": [
