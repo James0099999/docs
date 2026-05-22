@@ -46,6 +46,12 @@
               "seamless/betwin",
               "seamless/cancel"
             ]
+          },
+          {
+            "group": "Changelog",
+            "pages": [
+              "changelog/overview"
+            ]
           }
         ]
       }
