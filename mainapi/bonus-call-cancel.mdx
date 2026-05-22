@@ -23,7 +23,7 @@ Use this endpoint to terminate an in-progress bonus call before it finishes natu
 </ParamField>
 
 <ParamField body="issueId" type="long" required>
-  The unique identifier of the bonus call to cancel, as returned by the [Register Bonus](https://skysoft-e628c952.mintlify.app/api-reference/bonus/register) endpoint.
+  The unique identifier of the bonus call to cancel, as returned by the [Register Bonus](https://docs.igamingace.com/mainapi/bonus-call-register) endpoint.
 </ParamField>
 
 ### Example request
@@ -53,7 +53,7 @@ A bonus call moves through the following states:
 | Active | The bonus is registered and waiting to be triggered, or currently in progress. | Yes |
 | Completed | All spins have been played or the guaranteed amount has been paid out. | No — returns `BONUSCALL_ALEADY_ENDED` |
 
-If you attempt to cancel a bonus that has already completed, the API returns an error with the code `BONUSCALL_ALEADY_ENDED`. Check the current status first using the [Bonus Detail](https://skysoft-e628c952.mintlify.app/api-reference/bonus/detail) endpoint if you are unsure.
+If you attempt to cancel a bonus that has already completed, the API returns an error with the code `BONUSCALL_ALEADY_ENDED`. 
 
 ---
 
