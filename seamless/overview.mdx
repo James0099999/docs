@@ -1,3 +1,26 @@
 ---
 title: "Overview"
 ---
+
+All callback requests are sent as JSON data using the `POST` method.
+
+Our API expects HTTP Status code `200` for all requests successful or not. All other HTTP status codes are treated as unsuccessful.
+
+## **Request Header**
+
+| Key | Value | Description |
+| :-- | :-- | :-- |
+| `X-Request-Signature` | `Hash string` | Signature string issued by our API. <br />For more information, please read Security section. |
+| `Accept` | `application/json` | `Accept: application/json` |
+| `Content-Type` | `application/json` | `Content-Type: application/json` |
+
+## **Verifying Callback Request Signature**
+
+The `X-Request-Signature` header is used to ensure the authenticity and integrity of the API request. It contains a **Base64-encoded HMAC-SHA512 hash**, which the operator must generate using the request body and their secret API token (`API_TOKEN`).
+
+1. Extract all keys and values from the request body
+
+- The request body must be a flat JSON object (no nested objects).
+- Example request body
+
+/
