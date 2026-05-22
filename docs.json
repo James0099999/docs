@@ -11,7 +11,7 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "iGaming Platform API",
+        "tab": "iGamingAce API",
         "groups": [
           {
             "group": "Getting Started",
@@ -42,7 +42,7 @@
               "seamless/balance",
               "seamless/bet",
               "seamless/win",
-              "seamless/bet-win",
+              "seamless/betwin",
               "seamless/cancel"
             ]
           }
