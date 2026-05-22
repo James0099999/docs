@@ -27,11 +27,11 @@ The `bet` callback is sent when a player places a bet. Your server must deduct t
 </ParamField>
 
 <ParamField body="providerId" type="number" required>
-  Unique identifier of the game provider in Scorpio Play.
+  Unique identifier of the game provider in iGamingAce.
 </ParamField>
 
 <ParamField body="gameCode" type="string" required>
-  Unique identifier of the game in Scorpio Play.
+  Unique identifier of the game in iGamingAce.
 </ParamField>
 
 <ParamField body="currency" type="string" required>
@@ -77,7 +77,7 @@ Your server must respond with HTTP 200 and a JSON body containing the following 
 | `ERR_UNKNOWN` | Internal server error |
 
 <Warning>
-  Your response must be returned within **3 seconds**. If the request times out or returns an error, Scorpio Play will **not** retry — a `cancel` callback will be sent instead to revert the game round. An unsuccessful bet also cancels the current round, preventing the player from proceeding further.
+  Your response must be returned within **3 seconds**. If the request times out or returns an error, iGamingAce will **not** retry — a `cancel` callback will be sent instead to revert the game round. An unsuccessful bet also cancels the current round, preventing the player from proceeding further.
 </Warning>
 
 ## Examples

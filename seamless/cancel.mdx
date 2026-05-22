@@ -15,7 +15,7 @@ The `cancel` callback is sent when a player's bet fails to complete — due to n
 </ParamField>
 
 <ParamField body="transactionId" type="string" required>
-  Unique reference of this cancel transaction created in Scorpio Play. Use this to enforce idempotency.
+  Unique reference of this cancel transaction created in iGamingAce. Use this to enforce idempotency.
 </ParamField>
 
 <ParamField body="playerId" type="string" required>
@@ -27,7 +27,7 @@ The `cancel` callback is sent when a player's bet fails to complete — due to n
 </ParamField>
 
 <ParamField body="providerId" type="number" required>
-  Unique identifier of the game provider in Scorpio Play.
+  Unique identifier of the game provider in iGamingAce.
 </ParamField>
 
 <ParamField body="gameCode" type="number" required>
@@ -62,7 +62,7 @@ Your server must respond with HTTP 200 and a JSON body containing the following 
 | `ERR_UNKNOWN` | Internal server error |
 
 <Warning>
-  Your response must be returned within **4 seconds**. If the request times out or returns an error, Scorpio Play will automatically retry the request up to **2 more times**.
+  Your response must be returned within **4 seconds**. If the request times out or returns an error, iGamingAce will automatically retry the request up to **2 more times**.
 </Warning>
 
 <Tip>
