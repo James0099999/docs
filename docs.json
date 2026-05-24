@@ -60,10 +60,6 @@
       }
     ]
   },
-  "logo": {
-    "light": "/images/iGamingAce-logo.png",
-    "dark": "/images/iGamingAce-logo.png"
-  },
   "navbar": {
     "links": []
   },
