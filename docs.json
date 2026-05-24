@@ -78,5 +78,6 @@
   "appearance": {
     "strict": true,
     "default": "dark"
-  }
+  },
+  "logo": "/images/api-logo-white.png"
 }
