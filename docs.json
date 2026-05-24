@@ -76,7 +76,7 @@
    ]
   },
   "appearance": {
-    "strict": false,
+    "strict": true,
     "default": "dark"
   }
 }
