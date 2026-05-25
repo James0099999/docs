@@ -34,6 +34,7 @@ curl --request POST \
   --header 'Authorization: Bearer <API_TOKEN>' \
   --header 'Content-Type: application/json' \
   --data '{
+	"playerId": "player_88888",
     "issueId": 9887
   }'
 ```
@@ -53,7 +54,7 @@ A bonus call moves through the following states:
 | Active | The bonus is registered and waiting to be triggered, or currently in progress. | Yes |
 | Completed | All spins have been played or the guaranteed amount has been paid out. | No — returns `BONUSCALL_ALEADY_ENDED` |
 
-If you attempt to cancel a bonus that has already completed, the API returns an error with the code `BONUSCALL_ALEADY_ENDED`. 
+If you attempt to cancel a bonus that has already completed, the API returns an error with the code `BONUSCALL_ALEADY_ENDED`.
 
 ---
 
