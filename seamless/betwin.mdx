@@ -2,7 +2,7 @@
 title: "BetWin"
 ---
 
-The `betwin` callback is sent when a player's bet and its outcome in a single atomic operation. Your implementation must deduct `betAmount` from the player's balance and add `winAmount` in one transaction — both operations succeed or neither does.  This endpoint is used in game types where the bet and outcome are determined simultaneously, avoiding the need for a separate `withdraw` followed by a `deposit`
+The `betwin` callback is sent when a player's bet and its outcome complete in a single atomic operation. Your implementation must deduct `betAmount` from the player's balance and add `winAmount` in one transaction — both operations succeed or neither does. This endpoint is used in game types where the bet and outcome are determined simultaneously, avoiding the need for a separate `withdraw` followed by a `deposit`.
 
 - **URL:** Your configured Callback URL
 - **Method:** POST

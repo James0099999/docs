@@ -33,7 +33,7 @@ The `X-Request-Signature` header is used to ensure the authenticity and integrit
    - Sorted keys: `["amount", "currency", "playerId", "timestamp"]`
 3. Get the corresponding values in sorted key order
    - Values: `["1500", "USD", "user123", "1713792000"]`
-4. Join the values with a comma(`"1500,USD,user123,1713792000"`)
+4. Join the values with a comma (`"1500,USD,user123,1713792000"`)
 5. Generate base64 encoded HMAC-SHA512 hash of the string using `API_TOKEN` as the key
    ```javascript
    const crypto = require('crypto');
