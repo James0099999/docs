@@ -20,7 +20,7 @@ Seamless Integration is built around a bidirectional flow: your casino calls the
   <Step title="Creating players">
     Before a player can launch any game, you must link them to the iGamingAce API so the system can identify who is playing. Your existing casino user table is not automatically visible to iGamingAce — you need to explicitly create the association.
 
-    Once a player is linked, iGamingAce assigns them a unique integer called `playerId`. This becomes the player's permanent identifier within our system and can be referenced in all subsequent API calls.
+    Once a player is linked, iGamingAce assigns them a unique string called `playerId`. This becomes the player's permanent identifier within your system and can be referenced in all subsequent API calls.
 
     We recommend calling the player-link endpoint every time a player signs in to your platform. This keeps the association current and ensures accurate tracking, authentication, and session continuity across all game launches.
   </Step>
