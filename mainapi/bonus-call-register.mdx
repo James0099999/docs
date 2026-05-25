@@ -19,7 +19,7 @@ The register endpoint starts a bonus campaign for a specific player. You specify
 ### Request body
 
 <ParamField body="platformId" type="string" required>
-  Your own unique identifier for this bonus request. 
+  Your own unique identifier for this bonus request.
 </ParamField>
 
 <ParamField body="providerId" type="number" required>
@@ -53,7 +53,7 @@ The register endpoint starts a bonus campaign for a specific player. You specify
 </ParamField>
 
 <ParamField body="metaData" type="object">
-  Additional configuration for the bonus. Required when `bonusType = 2`.
+  Additional configuration for the bonus. Required when `bonusType = 1`.
 
   <Expandable title="metaData fields">
     <ParamField body="metaData.spinAmount" type="number" required>
@@ -78,7 +78,7 @@ curl --request POST \
     "providerId": 1,
     "gameId": 655,
     "playerId": "player_88888",
-    "bonusType": 2,
+    "bonusType": 1,
     "callAmount": 500,
     "expireAt": "2026-12-01 23:59:59",
     "metaData": {
