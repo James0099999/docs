@@ -49,10 +49,6 @@ Follow these four steps in order to go live with Seamless Integration.
     A callback URL is the endpoint on your server that iGamingAce will call during gameplay to check balances and post transaction results. To register it, navigate to **\[Settings\]** in the iGamingAce back office.
 
     The URL must begin with `http://` or `https://` — for example, `https://yourcasino.com/callback`. After saving, allow up to 10 minutes for the change to propagate to the live servers.
-
-    <Note>
-      If you are using Balance Transfer Mode instead of Seamless Integration, leave the Callback URL field empty. Balance Transfer Mode does not use callbacks.
-    </Note>
   </Step>
   <Step title="Writing callback processing code">
     Create a server-side endpoint at the callback URL you registered. This endpoint is responsible for handling all balance-related requests from iGamingAce during active game sessions.
@@ -67,17 +63,6 @@ Follow these four steps in order to go live with Seamless Integration.
 
     <Warning>
       You are responsible for any failures resulting from incomplete or incorrect implementation of the callback endpoint. Unhandled callbacks can cause transaction errors and player-facing disruptions.
-    </Warning>
-
-    To debug your implementation, open **\[API Error Logs\]** in the back office. All callback errors are logged there with request details, so you can trace and fix issues in your code.
-  </Step>
-  <Step title="Callback processing test">
-    Before going live, validate your implementation using the **\[API/Callback API Testing\]** tool in the back office. This tool sends test callback requests to your endpoint and verifies that your responses are correctly formatted.
-
-    Testing uses virtual data — no real points are consumed from your wallet during this phase. If you need more realistic test scenarios with actual point balances, contact your agent to request test points with proper authorization.
-
-    <Warning>
-      All tests must pass before you operate in a live environment. You are responsible for any issues resulting from going live without completing the testing phase.
     </Warning>
   </Step>
   <Step title="Game testing">
