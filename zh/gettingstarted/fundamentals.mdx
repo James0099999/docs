@@ -1,0 +1,71 @@
+---
+title: "Fundamentals"
+---
+
+Before you can make your first API call, you need a valid API token, the correct HTTP headers on every request, and a server IP address registered in the back office. This page covers those prerequisites along with the system security limits, the agent/operator hierarchy, and how the balance system works.
+
+## What you need to start
+
+To use our API, you need an `API_TOKEN` issued by administrators. This token is your identity credential for every API request — treat it like a password and never expose it in client-side code or public repositories.
+
+An `API_TOKEN` looks like this:
+
+```text
+60349266c8d9487eab7531b1a15d2480
+```
+
+You can find your token in **Settings** inside our back office once your account is provisioned.
+
+<Note>
+  Each account is designated for a single currency. If you need to support multiple currencies, you will need separate accounts for each one.
+</Note>
+
+To get an account, contact us.
+
+## HTTP headers
+
+Every API request must include the following three HTTP headers. You can verify your `API_TOKEN` value in the manager account's settings page in the back office.
+
+| Name | Value | Example |
+| :-- | :-- | :-- |
+| `Authorization` | `Bearer {API_TOKEN}` | `Authorization: Bearer 60349266c8d9487eab7531b1a15d2480` |
+| `Accept` | `application/json` | `Accept: application/json` |
+| `Content-Type` | `application/json` | `Content-Type: application/json` |
+
+Here is an example request using these headers:
+
+```bash
+curl --request GET \
+  --url https://api.igamingace.com/v1/provider/list \
+  --header "Authorization: Bearer 60349266c8d9487eab7531b1a15d2480" \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/json"
+```
+
+## System security
+
+Simultaneous calls from the same agent are limited to **50 concurrent requests**. If you exceed this limit, the API returns the error code `SERVER_IS_BUSY (1018)`.
+
+<Warning>
+  When you receive `SERVER_IS_BUSY (1018)`, do not retry immediately. Wait for your existing in-flight requests to complete before sending new ones.
+</Warning>
+
+## IP restriction
+
+The API only accepts requests from server IP addresses that you register in the **\[Settings\]** page of the back office. Enter each allowed IP address separated by a newline, for example:
+
+```text
+1.1.1.1
+2.2.2.2
+```
+
+<Note>
+  If you leave the **\[Allowed IP\]** field blank, the API accepts requests from any IP address. For production environments, restricting by IP is strongly recommended.
+</Note>
+
+## Agent and operator hierarchy
+
+The API uses a hierarchy model to manage operators:
+
+- An **Agent** is a single casino website operator. Each agent has its own back-office account and manages its own players.
+- An **Operator** manages multiple agents in a hierarchy. As an operator, you can create as many sub-agents as you need and oversee all agents under your supervision.
