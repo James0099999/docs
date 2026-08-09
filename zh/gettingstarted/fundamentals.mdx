@@ -2,29 +2,29 @@
 title: "Fundamentals"
 ---
 
-Before you can make your first API call, you need a valid API token, the correct HTTP headers on every request, and a server IP address registered in the back office. This page covers those prerequisites along with the system security limits, the agent/operator hierarchy, and how the balance system works.
+在发起第一次 API 调用之前，您需要：有效的 API Token、每次请求正确的 HTTP 请求头，以及已在后台登记的服务器 IP 地址。本页说明这些前提条件，并介绍系统安全限制、代理/运营商层级结构，以及余额体系的工作方式。
 
-## What you need to start
+## 开始前需要准备什么
 
-To use our API, you need an `API_TOKEN` issued by administrators. This token is your identity credential for every API request — treat it like a password and never expose it in client-side code or public repositories.
+使用我们的 API，需要由管理员发放的 `API_TOKEN`。该 Token 是您每次 API 请求的身份凭证——请像对待密码一样妥善保管，切勿在客户端代码或公开仓库中暴露。
 
-An `API_TOKEN` looks like this:
+`API_TOKEN` 示例如下:
 
 ```text
 60349266c8d9487eab7531b1a15d2480
 ```
 
-You can find your token in **Settings** inside our back office once your account is provisioned.
+账号开通后，可在后台的「设置」中查看您的 Token。
 
 <Note>
-  Each account is designated for a single currency. If you need to support multiple currencies, you will need separate accounts for each one.
+  每个账号仅对应一种货币。若需支持多种货币，请为每种货币分别开设账号。
 </Note>
 
-To get an account, contact us.
+如需开通账号，请联系我们。
 
 ## HTTP headers
 
-Every API request must include the following three HTTP headers. You can verify your `API_TOKEN` value in the manager account's settings page in the back office.
+每次 API 请求都必须包含以下三个 HTTP 请求头。您可在后台管理员账号的设置页中核对 `API_TOKEN` 的值。
 
 | Name | Value | Example |
 | :-- | :-- | :-- |
@@ -32,7 +32,7 @@ Every API request must include the following three HTTP headers. You can verify 
 | `Accept` | `application/json` | `Accept: application/json` |
 | `Content-Type` | `application/json` | `Content-Type: application/json` |
 
-Here is an example request using these headers:
+使用这些请求头的请求示例如下：
 
 ```bash
 curl --request GET \
@@ -42,17 +42,17 @@ curl --request GET \
   --header "Content-Type: application/json"
 ```
 
-## System security
+## 系统安全
 
-Simultaneous calls from the same agent are limited to **50 concurrent requests**. If you exceed this limit, the API returns the error code `SERVER_IS_BUSY (1018)`.
+同一代理的并发请求上限为 50。超出该限制时，API 将返回错误码 `SERVER_IS_BUSY（1018）`。
 
 <Warning>
-  When you receive `SERVER_IS_BUSY (1018)`, do not retry immediately. Wait for your existing in-flight requests to complete before sending new ones.
+  收到 `SERVER_IS_BUSY (1018)` 时，请勿立即重试。应等待已发出的请求完成后再发送新请求。
 </Warning>
 
-## IP restriction
+## IP 限制
 
-The API only accepts requests from server IP addresses that you register in the **\[Settings\]** page of the back office. Enter each allowed IP address separated by a newline, for example:
+API 仅接受来自您在后台 **\[设置\]** 页面登记的服务器 IP 地址的请求。请将每个允许的 IP 地址按换行分隔填写，例如：
 
 ```text
 1.1.1.1
@@ -60,12 +60,11 @@ The API only accepts requests from server IP addresses that you register in the 
 ```
 
 <Note>
-  If you leave the **\[Allowed IP\]** field blank, the API accepts requests from any IP address. For production environments, restricting by IP is strongly recommended.
+  若 **\[Allowed IP\]** 字段留空，则 API 接受来自任意 IP 的请求。生产环境强烈建议启用 IP 限制。
 </Note>
 
-## Agent and operator hierarchy
+## 代理与运营商层级
 
-The API uses a hierarchy model to manage operators:
-
-- An **Agent** is a single casino website operator. Each agent has its own back-office account and manages its own players.
-- An **Operator** manages multiple agents in a hierarchy. As an operator, you can create as many sub-agents as you need and oversee all agents under your supervision.
+API 采用层级模型管理运营商：
+- **Agent** : 单个赌场网站运营商。每个代理拥有独立的后台账号，并管理自有玩家。
+- **Operator** : 在层级中管理多个代理。作为运营商，您可按需创建任意数量的子代理，并监管下属的所有代理。
