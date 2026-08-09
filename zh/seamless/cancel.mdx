@@ -2,71 +2,71 @@
 title: "Cancel"
 ---
 
-The `cancel` callback is sent when a player's bet fails to complete — due to network issues, timeouts, or system errors. Your server must refund the full bet amount back to the player's balance to ensure account accuracy. This operation is idempotent — if your wallet receives more than one request with the same `transactionId`, you must register the refund only once.
+当玩家投注未能完成时（因网络问题、超时或系统错误），会发送 `cancel`（取消）回调。你的服务器必须将完整投注金额退还至玩家余额，以确保账户准确。该操作为幂等操作——若钱包收到多个带有相同 `transactionId` 的请求，退款只能登记一次。
 
-- **URL:** Your configured Callback URL
+- **URL:** 你配置的 Callback URL
 - **Method:** POST
 - **Headers:** `X-Request-Signature`, `Content-Type`, `Accept`
 
 ## Request parameters
 
 <ParamField body="command" type="string" required>
-  Always `"cancel"` for this callback type.
+  此回调类型始终为 `"cancel"`。
 </ParamField>
 
 <ParamField body="transactionId" type="long" required>
-  Unique reference of this cancel transaction created in our system. Use this to enforce idempotency.
+  本系统中创建的本次取消交易的唯一引用，用于实现幂等。
 </ParamField>
 
 <ParamField body="playerId" type="string" required>
-  Unique identifier of the player from your system.
+  你系统中玩家的唯一标识。
 </ParamField>
 
 <ParamField body="roundId" type="long" required>
-  Unique reference of the game round.
+  游戏局的唯一引用。
 </ParamField>
 
 <ParamField body="providerId" type="number" required>
-  Unique identifier of the game provider in our system.
+  本系统中游戏提供商的唯一标识。
 </ParamField>
 
 <ParamField body="gameCode" type="number" required>
-  Unique game id of the game in our system.
+  本系统中游戏的唯一游戏 ID。
 </ParamField>
 
 <ParamField body="timestamp" type="number" required>
-  Unix timestamp of the request.
+  请求的 Unix 时间戳。
 </ParamField>
 
 ## Response fields
 
-Your server must respond with HTTP 200 and a JSON body containing the following fields:
+你的服务器必须返回 HTTP 200，以及包含以下字段的 JSON 正文：
 
 <ResponseField name="balance" type="number" required>
-  The player's updated balance after the refund is applied.
+  退款应用后玩家的最新余额。
 </ResponseField>
 
 <ResponseField name="statusCode" type="string" required>
-  Result of the operation. Must be `"OK"` on success. See the status codes table below for all possible values.
+  操作结果。成功时必须为 `"OK"`。所有可能取值见下方状态码表。
 </ResponseField>
 
 ## Status codes
 
-| Status code | Description |
+| 状态码	 | 说明 |
 | :-- | :-- |
-| `OK` | Request successful |
-| `ERR_NOT_AUTHENTICATED` | The player is not authenticated |
-| `ERR_TRANSACTION_DOES_NOT_EXIST` | The referenced bet transaction does not exist in your system |
-| `ERR_TRANSACTION_ROLLED_BACK` | The referenced transaction has already been reversed |
-| `ERR_INTEGRITY_CHECK_FAILED` | Message integrity check failed |
-| `ERR_UNKNOWN` | Internal server error |
+| `OK` | 请求成功 |
+| `ERR_NOT_AUTHENTICATED` | 玩家未通过身份验证 |
+| `ERR_TRANSACTION_DOES_NOT_EXIST` | 你的系统中不存在所引用的投注交易 |
+| `ERR_TRANSACTION_ROLLED_BACK` | 所引用的交易已被回滚 |
+| `ERR_INTEGRITY_CHECK_FAILED` | 消息完整性校验失败 |
+| `ERR_UNKNOWN` | 内部服务器错误 |
 
 <Warning>
-  Your response must be returned within **4 seconds**. If the request times out or returns an error, we will automatically retry the request up to **2 more times**.
+  你的响应必须在 4 秒内返回。若请求超时或返回错误，我们会自动最多再重试 2 次。
 </Warning>
 
 <Tip>
-  Use `referenceId` to locate the original bet in your database. If the bet was never recorded (e.g., your system never received it), you can safely return `OK` with the player's current balance — there is nothing to refund.
+  请使用 `referenceId` 在数据库中定位原始投注。若该投注从未被记录（例如你的系统从未收到过），可安全返回 `OK` 及玩家当前余额——此时无需退款
 </Tip>
 
 ## Examples
