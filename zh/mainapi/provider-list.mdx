@@ -1,0 +1,76 @@
+---
+title: "Get Provider List"
+---
+
+Use this endpoint to retrieve all game providers that are enabled on your operator account. The response includes each provider's unique ID, display name. You'll use the `providerId` values returned here in subsequent calls such as [List Games](https://docs.igamingace.com/mainapi/game-list).
+
+## Request
+
+```bash
+GET /v1/provider/list
+```
+
+### Headers
+
+| Name | Value |
+| :-- | :-- |
+| `Authorization` | `Bearer <API_TOKEN>` |
+| `Content-Type` | `application/json` |
+| `Accept` | `application/json` |
+
+This endpoint takes no query parameters or request body.
+
+## Example Request
+
+```bash
+curl --request GET \
+  --url https://api.igamingace.com/v1/provider/list \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/json"
+```
+
+## Response
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "message": "OK",
+  "data": [
+    {
+      "providerId": 1,
+      "providerName": "Pragmatic Play"
+    },
+    {
+      "providerId": 2,
+      "providerName": "PG Soft"
+    }
+  ]
+}
+```
+
+### Response Fields
+
+<ResponseField name="success" type="bool">
+  Indicates whether the request was processed successfully.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Result message of the request (e.g., `"OK"`).
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  List of game providers available to your operator account.
+
+  <Expandable title="data[]">
+    <ResponseField name="providerId" type="number">
+      Unique identifier of the provider. Use this value in the `providerId` parameter of other endpoints.
+    </ResponseField>
+
+    <ResponseField name="providerName" type="string">
+      Display name of the provider (e.g., `"Pragmatic Play"`).
+    </ResponseField>
+  </Expandable>
+</ResponseField>
