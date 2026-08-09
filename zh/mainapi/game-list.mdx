@@ -2,7 +2,7 @@
 title: "Get Game List"
 ---
 
-Use this endpoint to retrieve all games available to your operator account from a specific provider. The response includes the game code (used to launch a game), display name, thumbnail image URL, game type, and maintenance status. You can use this data to populate your game lobby UI and filter or badge games by type or availability.
+使用此接口，可从指定供应商获取您运营商账户下可用的全部游戏。响应包含游戏代码（用于启动游戏）、显示名称、缩略图 URL、游戏类型以及维护状态。您可用这些数据填充游戏大厅 UI，并按类型或可用性筛选或标注游戏。
 
 ## Request
 
@@ -21,7 +21,7 @@ GET /v1/gamelist/:providerId
 ### Path Parameters
 
 <ParamField path="providerId" type="number" required>
-  The unique identifier of the provider whose game catalog you want to retrieve. You can get a list of valid provider IDs from [List Providers](https://docs.igamingace.com/mainapi/provider-list).
+	要获取其游戏目录的供应商唯一标识符。有效的供应商 ID 列表可从 [List Providers](https://docs.igamingace.com/zh/mainapi/provider-list) 获取。
 </ParamField>
 
 ## Example Request
@@ -61,39 +61,39 @@ curl --request GET \
 ### Response Fields
 
 <ResponseField name="success" type="bool">
-  Indicates whether the API call succeeded.
+  指示 API 调用是否成功。
 </ResponseField>
 
 <ResponseField name="message" type="string">
-  Textual confirmation of the API call result (e.g., `"OK"`).
+  API 调用结果的文本确认（例如 `"OK"`）。
 </ResponseField>
 
 <ResponseField name="data" type="array">
-  Array of game objects available from the specified provider.
+  指定供应商下可用游戏对象的数组。
 
   <Expandable title="data[]">
     <ResponseField name="gameID" type="string">
-      Unique game identifier (game id). Pass this value as `gameId` when calling [Launch Game](https://skysoft-e628c952.mintlify.app/api-reference/games/game-launch).
+	  游戏的唯一标识符（game id）。调用 [Launch Game](https://docs.igamingace.com/zh/api-reference/games/game-launch) 时，请将此值作为 `gameId` 传入。
     </ResponseField>
 
     <ResponseField name="gameName" type="string">
-      Display name of the game, suitable for use in your lobby UI.
+      适合用于大厅 UI 的游戏显示名称。
     </ResponseField>
 
     <ResponseField name="gameSymbol" type="string">
-      Unique game symbol string.
+      唯一的游戏符号字符串。
     </ResponseField>
 
     <ResponseField name="gameImage" type="string">
-      URL of the game's thumbnail image.
+      游戏缩略图的 URL。
     </ResponseField>
 
     <ResponseField name="freeBonusMeta" type="object">
-      This is for bonus call (free game). When creating free games, operators should specify base bet amount for free game which should be multiple of “betUnit” and should be less than “maxMultiple”.
+      用于奖金调用（免费游戏）。创建免费游戏时，运营商应指定免费游戏的基础投注金额，该金额应为 “betUnit” 的倍数，且应小于 “maxMultiple”。
     </ResponseField>
 
     <ResponseField name="publishDate" type="string">
-      Game published date
+      游戏发布日期。
     </ResponseField>
   </Expandable>
 </ResponseField>
