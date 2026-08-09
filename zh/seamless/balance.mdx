@@ -2,51 +2,51 @@
 title: "Balance"
 ---
 
-We send the `balance` callback when a player launches a game and every minute during gameplay to keep their displayed balance up to date. Before returning the player's balance, you must verify that the player's session is still active and authenticated. Any status code other than `OK` terminates the current process flow and displays an error message to the player.
+我们会在玩家启动游戏时，以及游戏过程中每分钟发送一次余额回调，以保持界面显示的余额为最新。在返回玩家余额之前，您必须验证玩家的会话仍处于有效且已认证状态。除 OK 以外的任何状态码都会终止当前流程，并向玩家显示错误信息。
 
-- **URL:** Your configured Callback URL
+- **URL:** 您配置的回调 URL
 - **Method:** POST
 - **Headers:** `X-Request-Signature`, `Content-Type`, `Accept`
 
 ## Request parameters
 
 <ParamField body="command" type="string" required>
-  Always `"balance"` for this callback type.
+  此回调类型始终为 `"balance"`。
 </ParamField>
 
 <ParamField body="playerId" type="string" required>
-  Unique identifier of the player from your system.
+  您系统中的玩家唯一标识符。
 </ParamField>
 
 <ParamField body="timestamp" type="number" required>
-  Unix timestamp of the request.
+  请求的 Unix 时间戳。
 </ParamField>
 
 ## Response fields
 
-Your server must respond with HTTP 200 and a JSON body containing the following fields:
+您的服务器必须以 HTTP 200 响应，并在 JSON 正文中包含以下字段：
 
 <ResponseField name="balance" type="number">
-  The player's current balance.
+  玩家当前余额。
 </ResponseField>
 
 <ResponseField name="statusCode" type="string" required>
-  Result of the operation. Must be `"OK"` on success. See the status codes table below for all possible values.
+  操作结果。成功时必须为 "OK"。所有可能的值请参见下方状态码表。
 </ResponseField>
 
 ## Status codes
 
-| Status code | Description |
+| 状态码	 | 说明 |
 | :-- | :-- |
-| `OK` | Request successful |
-| `ERR_INVALID_ACCOUNT` | The player's currency does not match the currency code in the request |
-| `ERR_NOT_AUTHENTICATED` | The player is not authenticated |
-| `ERR_INVALID_PLAYER_ID` | The player ID is invalid |
-| `ERR_INTEGRITY_CHECK_FAILED` | Message integrity check failed |
-| `ERR_UNKNOWN` | Internal server error |
+| `OK` | 请求成功 |
+| `ERR_INVALID_ACCOUNT` | 玩家货币与请求中的货币代码不匹配 |
+| `ERR_NOT_AUTHENTICATED` | 玩家未通过认证 |
+| `ERR_INVALID_PLAYER_ID` | 玩家 ID 无效 |
+| `ERR_INTEGRITY_CHECK_FAILED` | 消息完整性校验失败 |
+| `ERR_UNKNOWN` | 内部服务器错误 |
 
 <Note>
-  Any status code other than `OK` is treated as unsuccessful. No retry will be scheduled — the current process flow is terminated immediately and an error message is shown to the player.
+  除 `OK` 以外的任何状态码均视为失败。不会安排重试——当前流程会立即终止，并向玩家显示错误信息。
 </Note>
 
 ## Examples
