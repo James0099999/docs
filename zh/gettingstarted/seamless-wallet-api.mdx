@@ -2,70 +2,69 @@
 title: "Seamless Wallet API"
 ---
 
-Seamless Integration lets you manage your players' balances directly in your own system. Instead of storing funds with our company, your backend remains the source of truth — the API sends callback requests to your server to check balances and apply updates as bets and wins occur. This gives you full control over deposits, withdrawals, transaction history, and statistics across every game session.
+无缝集成让您直接在自有系统中管理玩家余额。资金无需存放在我方公司，您的后端始终是权威数据源——在下注与派奖发生时，API 会向您的服务器发送回调请求，以查询余额并完成更新。这样您就能在每一次游戏会话中，对充值、提现、交易记录与统计数据保持完全掌控。
 
-## Basic insights
+## 基础要点
 
-Seamless Integration is built around a bidirectional flow: your casino calls our API to launch games, and we call your backend to read and write player balances during gameplay.
+无缝集成基于双向交互：您的娱乐场调用我们的 API 启动游戏；在游戏过程中，我们调用您的后端读写玩家余额。
 
-- We send callback requests to your server to retrieve each player's current balance and verify their authority before processing bets
-- Your backend is updated on every bet and win, keeping balances in sync in real time
-- Player funds remain entirely within your system, protecting you from any potential malicious activity by an API provider
-- You can integrate multiple game APIs within the same casino without conflicts — each API operates against your unified backend
-- If a bet or win is not processed correctly due to an unexpected error, all funds are automatically refunded so players never lose money due to a system failure
+- 我们会向您的服务器发送回调请求，获取每位玩家的当前余额，并在处理下注前核验其权限
+- 每次下注与派奖都会更新您的后端，余额实时保持同步
+- 玩家资金始终留在您的系统内，可避免因 API 提供方潜在恶意行为带来的风险
+- 您可在同一娱乐场内接入多个游戏 API 且互不冲突——各 API 均对接您统一的后端
+- 若因意外错误导致下注或派奖未能正确处理，所有资金将自动退回，玩家不会因系统故障而损失资金
 
-## Process flow
+## 流程说明
 
 <Steps>
   <Step title="Creating players">
-    Before a player can launch any game, you must link them to our API so the system can identify who is playing. Your existing casino user table is not automatically visible to us — you need to explicitly create the association.
+    玩家启动任何游戏前，您必须先将其关联到我们的 API，以便系统识别当前玩家。您现有的娱乐场用户表不会自动对我们可见——您需要显式建立该关联。
 
-    Once a player is linked, we assign them a unique string called `playerId`. This becomes the player's permanent identifier within your system and can be referenced in all subsequent API calls.
+    玩家关联成功后，我们会为其分配一个名为 `playerId` 的唯一字符串。它将成为该玩家在您系统内的永久标识，并可在后续所有 API 调用中引用。
 
-    We recommend calling the player-link endpoint every time a player signs in to your platform. This keeps the association current and ensures accurate tracking, authentication, and session continuity across all game launches.
+    我们建议在玩家每次登录您的平台时都调用玩家关联（player-link）接口。这样可保持关联状态最新，并确保在所有游戏启动过程中实现准确的追踪、鉴权与会话连续性。
+
   </Step>
   <Step title="Game launch">
-    When a player selects a game, your casino calls our API to request a one-time-use game URL. The API generates a short-lived URL tied to that specific player and session. Your casino then redirects the player's browser to that URL, which loads the game directly.
+    当玩家选择游戏时，您的娱乐场调用我们的 API 请求一次性游戏 URL。API 会生成绑定该玩家与该会话的短期有效 URL。随后您的娱乐场将玩家浏览器重定向至该 URL，即可直接加载游戏。
 
-    The URL is single-use and expires after the session begins, so a new URL must be requested each time a player opens a game. From this point on, the game handles input from the player and communicates back to your server via callbacks.
+    该 URL 仅可使用一次，且在会话开始后失效，因此玩家每次打开游戏都必须重新申请新的 URL。自此之后，游戏将处理玩家输入，并通过回调与您的服务器通信。
   </Step>
   <Step title="Game play">
-    Once the game is running, the player places bets. For each spin or round:
+    游戏运行后，玩家开始下注。每一次旋转或每一局：
 
-    - Our backend generates the result based on your casino's configured RTP settings
-    - The transaction is recorded in the game's history
-    - The API sends a callback to your server to deduct the bet amount and, if applicable, credit any winnings
+    - 我们的后端根据您娱乐场配置的 RTP 设置生成结果
+    - 交易会记录在游戏历史中
+    - API 向您的服务器发送回调，扣除下注金额，并在适用时计入奖金
 
-    If a bet or win cannot be processed correctly due to an unexpected issue, we automatically roll back the transaction and refund all funds to the player. No manual intervention is required.
+    若因意外问题导致下注或派奖无法正确处理，我们将自动回滚交易并将全部资金退还给玩家，无需人工干预。
   </Step>
 </Steps>
 
-## Integration roadmap
+## 接入路线图
 
-Follow these four steps in order to go live with Seamless Integration.
+请按以下四个步骤依次完成，即可上线无缝集成。
 
 <Steps>
   <Step title="Setting a callback URL">
-    A callback URL is the endpoint on your server that we will call during gameplay to check balances and post transaction results. To register it, navigate to **\[Settings\]** in the back office.
-
-    The URL must begin with `http://` or `https://` — for example, `https://yourcasino.com/callback`. After saving, allow up to 10 minutes for the change to propagate to the live servers.
+    回调 URL 是您服务器上的接口，我们会在游戏过程中调用它来查询余额并提交交易结果。要注册该地址，请前往后台的 **设置**
+    URL 必须以 `http://` 或 `https://` 开头——例如 `https://yourcasino.com/callback`。保存后，请等待最多 10 分钟，变更才会同步到线上服务器。
   </Step>
   <Step title="Writing callback processing code">
-    Create a server-side endpoint at the callback URL you registered. This endpoint is responsible for handling all balance-related requests from us during active game sessions.
+    在您已注册的回调 URL 上创建服务端接口。该接口负责在活跃游戏会话期间处理我们发出的全部余额相关请求。
 
-    Your endpoint must:
+    您的接口必须：
 
-    1. **Listen for POST requests** — we send all callbacks as HTTP POST requests
-    2. **Parse the JSON body** — each request contains structured data describing the transaction or balance inquiry
-    3. **Return balance and status** — respond with the player's current balance and a `statusCode` indicating success or failure
+    1. **监听 POST 请求** — 我们所有回调均以 HTTP POST 发送
+    2. **解析 JSON 请求体** — 每条请求包含描述交易或余额查询的结构化数据
+    3. **返回余额与状态** — 响应中需包含玩家当前余额，以及表示成功或失败的 `statusCode`
 
-    For the full request and response specifications, see the Seamless Wallet API reference page.
-
+    完整的请求与响应规范，请参阅无缝钱包（Seamless Wallet）API 参考页。
     <Warning>
-      You are responsible for any failures resulting from incomplete or incorrect implementation of the callback endpoint. Unhandled callbacks can cause transaction errors and player-facing disruptions.
+      因回调接口实现不完整或不正确而导致的任何故障，均由您自行承担责任。未正确处理的回调可能引发交易错误，并对玩家端造成影响。
     </Warning>
   </Step>
   <Step title="Game testing">
-    Once your callback endpoint passes all automated tests, use the **Main API** endpoints to run end-to-end game tests with real game sessions. Verify that balances update correctly in your system as bets and wins are processed during actual gameplay.
+    当您的回调接口通过全部自动化测试后，请使用 **主 API（Main API）** 接口，通过真实游戏会话进行端到端测试。确认在实际游戏过程中，随着下注与派奖的处理，您系统中的余额能够正确更新。
   </Step>
 </Steps>
