@@ -2,7 +2,7 @@
 title: "Bonus Call Cancel"
 ---
 
-Use this endpoint to terminate an in-progress bonus call before it finishes naturally. Canceling a bonus forfeits any remaining free spins or guaranteed win amount that has not yet been paid out. You can only cancel a bonus that is currently active — attempting to cancel one that has already ended returns a `BONUSCALL_ALEADY_ENDED` error.
+使用此接口可在奖励局自然结束前终止进行中的奖励局。取消奖励后，尚未使用的免费旋转次数或尚未派发的保底赢额将被没收。仅可取消当前仍处于进行中的奖励；若尝试取消已结束的奖励，将返回 `BONUSCALL_ALEADY_ENDED` 错误。
 
 ## Request
 
@@ -19,11 +19,11 @@ Use this endpoint to terminate an in-progress bonus call before it finishes natu
 ### Request body
 
 <ParamField body="playerId" type="string" required>
-  The unique identifier of the player.
+  玩家的唯一标识符。
 </ParamField>
 
 <ParamField body="issueId" type="long" required>
-  The unique identifier of the bonus call to cancel, as returned by the [Register Bonus](https://docs.igamingace.com/mainapi/bonus-call-register) endpoint.
+  要取消的奖励局唯一标识符，由 [Register Bonus](https://docs.igamingace.com/zh/mainapi/bonus-call-register) 接口返回。
 </ParamField>
 
 ### Example request
@@ -40,32 +40,32 @@ curl --request POST \
 ```
 
 <Warning>
-  Cancellation is irreversible. Any free spins not yet played or any guaranteed win amount not yet awarded will be forfeited. Confirm with the player before canceling on their behalf.
+  取消操作不可撤销。尚未进行的免费旋转，或尚未发放的保底赢额，均将被没收。代玩家取消前，请先与玩家确认。
 </Warning>
 
 ---
 
-## Bonus lifecycle
+## 奖励生命周期
 
-A bonus call moves through the following states:
+奖励局会经历以下状态：
 
-| Status | Description | Can be canceled? |
+| 状态 | 说明 | 可否取消？|
 | :-- | :-- | :-- |
-| Active | The bonus is registered and waiting to be triggered, or currently in progress. | Yes |
-| Completed | All spins have been played or the guaranteed amount has been paid out. | No — returns `BONUSCALL_ALEADY_ENDED` |
+| Active | 奖励已注册并等待触发，或当前正在进行中。| Yes |
+| Completed | 所有旋转已完成，或保底金额已派发。| 不可以 — 返回 `BONUSCALL_ALEADY_ENDED` |
 
-If you attempt to cancel a bonus that has already completed, the API returns an error with the code `BONUSCALL_ALEADY_ENDED`.
+若尝试取消已完成的奖励，API 将返回错误码 `BONUSCALL_ALEADY_ENDED`。
 
 ---
 
 ## Response
 
 <ResponseField name="success" type="boolean">
-  `true` when the bonus was successfully canceled.
+  奖励成功取消时为 `true`。
 </ResponseField>
 
 <ResponseField name="message" type="string">
-  A short confirmation string, typically `"OK"`.
+  一段简短确认字符串，通常为 `"OK"`。
 </ResponseField>
 
 ### Example response
