@@ -12,42 +12,91 @@
     "dark": "/images/favicon.ico"
   },
   "navigation": {
-    "tabs": [
+    "languages": [
       {
-        "tab": "Slot Game API",
-        "pages": [
-          "welcome",
+        "language": "en",
+        "tabs": [
           {
-            "group": "Getting Started",
+            "tab": "Slot Game API",
             "pages": [
-              "gettingstarted/introduction",
-              "gettingstarted/fundamentals",
-              "gettingstarted/seamless-wallet-api",
-              "gettingstarted/bonuscall",
-              "gettingstarted/error-codes",
-              "gettingstarted/languages"
+              "welcome",
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "gettingstarted/introduction",
+                  "gettingstarted/fundamentals",
+                  "gettingstarted/seamless-wallet-api",
+                  "gettingstarted/bonuscall",
+                  "gettingstarted/error-codes",
+                  "gettingstarted/languages"
+                ]
+              },
+              {
+                "group": "Main API",
+                "pages": [
+                  "mainapi/overview",
+                  "mainapi/provider-list",
+                  "mainapi/game-list",
+                  "mainapi/game-launch",
+                  "mainapi/bonus-call-register",
+                  "mainapi/bonus-call-cancel"
+                ]
+              },
+              {
+                "group": "Seamless Wallet API",
+                "pages": [
+                  "seamless/overview",
+                  "seamless/balance",
+                  "seamless/bet",
+                  "seamless/win",
+                  "seamless/betwin",
+                  "seamless/cancel"
+                ]
+              }
             ]
-          },
+          }
+        ]
+      },
+      {
+        "language": "zh",
+        "tabs": [
           {
-            "group": "Main API",
+            "tab": "Slot Game API",
             "pages": [
-              "mainapi/overview",
-              "mainapi/provider-list",
-              "mainapi/game-list",
-              "mainapi/game-launch",
-              "mainapi/bonus-call-register",
-              "mainapi/bonus-call-cancel"
-            ]
-          },
-          {
-            "group": "Seamless Wallet API",
-            "pages": [
-              "seamless/overview",
-              "seamless/balance",
-              "seamless/bet",
-              "seamless/win",
-              "seamless/betwin",
-              "seamless/cancel"
+              "zh/welcome",
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "zh/gettingstarted/introduction",
+                  "zh/gettingstarted/fundamentals",
+                  "zh/gettingstarted/seamless-wallet-api",
+                  "zh/gettingstarted/bonuscall",
+                  "zh/gettingstarted/error-codes",
+                  "zh/gettingstarted/languages"
+                ]
+              },
+              {
+                "group": "Main API",
+                "pages": [
+                  "zh/mainapi/overview",
+                  "zh/mainapi/provider-list",
+                  "zh/mainapi/game-list",
+                  "zh/mainapi/game-launch",
+                  "zh/mainapi/bonus-call-register",
+                  "zh/mainapi/bonus-call-cancel"
+                ]
+              },
+              {
+                "group": "Seamless Wallet API",
+                "pages": [
+                  "zh/seamless/overview",
+                  "zh/seamless/balance",
+                  "zh/seamless/bet",
+                  "zh/seamless/win",
+                  "zh/seamless/betwin",
+                  "zh/seamless/cancel"
+                ]
+              }
             ]
           }
         ]
