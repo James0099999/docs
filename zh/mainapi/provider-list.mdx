@@ -2,8 +2,7 @@
 title: "Get Provider List"
 ---
 
-Use this endpoint to retrieve all game providers that are enabled on your operator account. The response includes each provider's unique ID, display name. You'll use the `providerId` values returned here in subsequent calls such as [List Games](https://docs.igamingace.com/mainapi/game-list).
-
+使用此端点可检索您运营商账户中已启用的所有游戏提供商。响应包含每个提供商的唯一 ID 与显示名称。您可在后续调用（例如 [List Games](https://docs.igamingace.com/zh/mainapi/game-list)）中使用此处返回的 providerId 值。
 ## Request
 
 ```bash
@@ -18,7 +17,7 @@ GET /v1/provider/list
 | `Content-Type` | `application/json` |
 | `Accept` | `application/json` |
 
-This endpoint takes no query parameters or request body.
+此端点不接受查询参数或请求体。
 
 ## Example Request
 
@@ -54,23 +53,23 @@ curl --request GET \
 ### Response Fields
 
 <ResponseField name="success" type="bool">
-  Indicates whether the request was processed successfully.
+  指示请求是否已成功处理。
 </ResponseField>
 
 <ResponseField name="message" type="string">
-  Result message of the request (e.g., `"OK"`).
+  请求结果消息（例如 `"OK"`）。
 </ResponseField>
 
 <ResponseField name="data" type="array">
-  List of game providers available to your operator account.
+  您运营商账户可用的游戏提供商列表。
 
   <Expandable title="data[]">
     <ResponseField name="providerId" type="number">
-      Unique identifier of the provider. Use this value in the `providerId` parameter of other endpoints.
+      提供商的唯一标识符。请在其他端点的 `providerId` 参数中使用该值。
     </ResponseField>
 
     <ResponseField name="providerName" type="string">
-      Display name of the provider (e.g., `"Pragmatic Play"`).
+      提供商的显示名称 (例如 `"Pragmatic Play"`).
     </ResponseField>
   </Expandable>
 </ResponseField>
