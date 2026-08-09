@@ -2,77 +2,77 @@
 title: "Win"
 ---
 
-The `win` callback is sent when a player wins a round. Your server must credit the win amount to the player's balance and return the updated balance. This operation is idempotent — if your wallet receives more than one request with the same `transactionId`, you must register the transaction only once.
+当玩家赢得一局时会发送 `win` 回调。你的服务器必须将中奖金额记入玩家余额，并返回更新后的余额。该操作是幂等的——若钱包收到多个带有相同 transactionId 的请求，该交易只能登记一次。
 
-- **URL:** Your configured Callback URL
+- **URL:** 你配置的 Callback URL
 - **Method:** POST
 - **Headers:** `X-Request-Signature`, `Content-Type`, `Accept`
 
 ## Request parameters
 
 <ParamField body="command" type="string" required>
-  Always `"win"` for this callback type.
+  此回调类型固定为 `"win"`
 </ParamField>
 
 <ParamField body="transactionId" type="long" required>
-  Unique reference of the transaction created in our system. Use this to enforce idempotency.
+  我方系统中创建的交易唯一引用。用于保证幂等性
 </ParamField>
 
 <ParamField body="playerId" type="string" required>
-  Unique identifier of the player from your system.
+  你方系统中的玩家唯一标识
 </ParamField>
 
 <ParamField body="roundId" type="long" required>
-  Unique reference of the game round.
+  游戏局次的唯一引用
 </ParamField>
 
 <ParamField body="providerId" type="number" required>
-  Unique identifier of the game provider in our system.
+  我方系统中游戏提供商的唯一标识
 </ParamField>
 
 <ParamField body="gameCode" type="number" required>
-  Unique game id of the game in our system.
+  我方系统中该游戏的唯一 game id
 </ParamField>
 
 <ParamField body="amount" type="number" required>
-  Win amount to credit to the player's balance.
+  需记入玩家余额的中奖金额
 </ParamField>
 
 <ParamField body="isRoundFinished" type="boolean" required>
-  Indicates whether the round is complete after this win. If `true`, no further `win` callbacks will be sent for this round. If `false`, additional `win` callbacks may follow.
+  表示此赢款后该局是否已结束。若为 `true`，本局不会再发送后续 `win` 回调；若为 `false`，之后可能还有额外的 `win` 回调
 </ParamField>
 
 <ParamField body="bonusId" type="long" required>
-  0: no bonus, else the bonus id related
+  0：无奖金；否则为相关奖金 id
 </ParamField>
 
 <ParamField body="timestamp" type="number" required>
-  Unix timestamp of the request.
+  请求的 Unix 时间戳
 </ParamField>
 
 ## Response fields
 
-Your server must respond with HTTP 200 and a JSON body containing the following fields:
+你的服务器必须以 HTTP 200 响应，且 JSON 正文包含以下字段：
 
 <ResponseField name="balance" type="number" required>
-  The player's updated balance after the win amount is credited.
+  记入中奖金额后玩家的最新余额
 </ResponseField>
 
 <ResponseField name="statusCode" type="string" required>
-  Result of the operation. Must be `"OK"` on success. See the status codes table below for all possible values.
+  操作结果。成功时必须为 `"OK"`。所有可能取值见下方状态码表
 </ResponseField>
 
 ## Status codes
 
-| Status code | Description |
+| 状态码	 | 说明 |
 | :-- | :-- |
-| `OK` | Request successful |
-| `ERR_INTEGRITY_CHECK_FAILED` | Message integrity check failed |
-| `ERR_NOT_AUTHENTICATED` | The player is not authenticated |
-| `ERR_UNKNOWN` | Internal server error |
+| `OK` | 请求成功 |
+| `ERR_INTEGRITY_CHECK_FAILED` | 消息完整性校验失败 |
+| `ERR_NOT_AUTHENTICATED` | 玩家未认证 |
+| `ERR_UNKNOWN` | 内部服务器错误 |
 
 <Warning>
-  Your response must be returned within **4 seconds**. If the request times out or returns an error, we will automatically retry the request up to **2 more times**.
+  你的响应必须在 **4 秒** 内返回。若请求超时或返回错误，我们会自动再重试最多 **2 次**。
 </Warning>
 
 ## Examples
