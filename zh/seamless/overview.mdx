@@ -2,9 +2,9 @@
 title: "Overview"
 ---
 
-All callback requests are sent as JSON data using the `POST` method.
+所有回调请求均以 JSON 数据形式通过 `POST` 方法发送。
 
-Our API expects HTTP Status code `200` for all requests successful or not. All other HTTP status codes are treated as unsuccessful.
+我们的 API 要求所有请求（无论成功与否）均返回 HTTP 状态码 `200`。其他任何 HTTP 状态码均视为失败。
 
 ## **Request Header**
 
@@ -14,13 +14,13 @@ Our API expects HTTP Status code `200` for all requests successful or not. All o
 | `Accept` | `application/json` | `Accept: application/json` |
 | `Content-Type` | `application/json` | `Content-Type: application/json` |
 
-## **Verifying Callback Request Signature**
+## **验证回调请求签名**
 
-The `X-Request-Signature` header is used to ensure the authenticity and integrity of the API request. It contains a **Base64-encoded HMAC-SHA512 hash**, which the operator must generate using the request body and their secret API token (`API_TOKEN`).
+`X-Request-Signature` 请求头用于确保 API 请求的真实性和完整性。它包含一个 Base64 编码的 HMAC-SHA512 哈希值，运营商必须使用请求体及其密钥 API 令牌（`API_TOKEN`）生成该哈希。
 
-1. Extract all keys and values from the request body
-   - The request body must be a flat JSON object (no nested objects).
-   - Example request body
+1. 从请求体中提取所有键和值
+   - 请求体必须是扁平的 JSON 对象（不得包含嵌套对象）。
+   - 请求体示例
    ```bash
    {
      "amount": 1500,
@@ -29,12 +29,12 @@ The `X-Request-Signature` header is used to ensure the authenticity and integrit
      "timestamp": 1713792000
    }
    ```
-2. Sort the keys alphabetically
-   - Sorted keys: `["amount", "currency", "playerId", "timestamp"]`
-3. Get the corresponding values in sorted key order
-   - Values: `["1500", "USD", "user123", "1713792000"]`
-4. Join the values with a comma (`"1500,USD,user123,1713792000"`)
-5. Generate base64 encoded HMAC-SHA512 hash of the string using `API_TOKEN` as the key
+2. 按字母顺序对键进行排序
+   - 排序后的键：`["amount", "currency", "playerId", "timestamp"]`
+3. 按排序后的键顺序获取对应的值
+   - 值: `["1500", "USD", "user123", "1713792000"]`
+4. 用逗号将各值连接起来 (`"1500,USD,user123,1713792000"`)
+5. 使用 `API_TOKEN` 作为密钥，对该字符串生成 Base64 编码的 HMAC-SHA512 哈希
    ```javascript
    const crypto = require('crypto');
    const apiToken = "my_super_secret_token";
@@ -43,4 +43,4 @@ The `X-Request-Signature` header is used to ensure the authenticity and integrit
                       .update(data)
                       .digest('base64');
    ```
-6. Compare the hash string you generated with the value provided in the `X-Request-Signature` header. If they do not match, it indicates that the request may have been altered or tampered with by a malicious actor.
+6. 将你生成的哈希字符串与 `X-Request-Signature` 请求头中提供的值进行比较。若两者不匹配，则表明该请求可能已被恶意方篡改或伪造。
