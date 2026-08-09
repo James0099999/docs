@@ -1,0 +1,23 @@
+---
+title: "Overview"
+---
+
+## HTTP headers
+
+Every API request must include the following three HTTP headers. You can verify your `API_TOKEN` value in the manager account's settings page in the back office.
+
+| Name | Value | Example |
+| :-- | :-- | :-- |
+| `Authorization` | `Bearer {API_TOKEN}` | `Authorization: Bearer 60349266c8d9487eab7531b1a15d2480` |
+| `Accept` | `application/json` | `Accept: application/json` |
+| `Content-Type` | `application/json` | `Content-Type: application/json` |
+
+Here is an example request using these headers:
+
+```bash
+curl --request GET \
+  --url https://api.igamingace.com/v1/provider/list \
+  --header "Authorization: Bearer 60349266c8d9487eab7531b1a15d2480" \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/json"
+```
