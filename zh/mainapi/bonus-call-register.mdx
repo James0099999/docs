@@ -2,7 +2,7 @@
 title: "Bonus Call Register"
 ---
 
-The register endpoint starts a bonus campaign for a specific player. You specify whether it's a Free Spin Bonus (predefined free spins) or a Regular Bonus Call (a guaranteed winning amount). Only one active bonus call can run per player at a time. Once the bonus completes in one of the configured games, it will not be triggered again for any other game in the same registration.
+注册接口会为指定玩家启动一次奖金活动。你需要指定是免费旋转奖金（预定义免费旋转）还是常规奖金回调（保证中奖金额）。每位玩家同一时间只能有一个进行中的奖金回调。奖金在任一已配置游戏中完成后，不会再在同一次注册的其他游戏中触发。
 
 ## Request
 
@@ -19,49 +19,49 @@ The register endpoint starts a bonus campaign for a specific player. You specify
 ### Request body
 
 <ParamField body="platformId" type="string" required>
-  Your own unique identifier for this bonus request.
+  您为此奖励请求自定义的唯一标识符。
 </ParamField>
 
 <ParamField body="providerId" type="number" required>
-  The numeric ID of the game provider under which the bonus will be active.
+  奖励生效所属游戏供应商的数字 ID。
 </ParamField>
 
 <ParamField body="gameId" type="number" required>
-  Specifies which games can trigger the bonus event.
+  指定哪些游戏可触发该奖励事件。
 </ParamField>
 
 <ParamField body="playerId" type="string" required>
-  The player's unique identifier in your system.
+  玩家在您系统中的唯一标识符。
 </ParamField>
 
 <ParamField body="bonusType" type="number" required>
-  The type of bonus to register.
+  要注册的奖金类型。
 
-  - `1` — Free Spin Bonus. The player receives a set number of free spins; `callAmount` acts as the maximum win cap. Available for Pragmatic Play only.
-  - `2` — Regular Bonus Call. The player is guaranteed to win the `callAmount` by the end of the campaign. This Regular Bonus is not active at the moment. Only Free Spin Bonus is available at the moment.
+  - `1` — Free Spin Bonus. 玩家会获得固定次数的免费旋转；`callAmount` 作为最高可赢上限。仅适用于 Pragmatic Play。
+  - `2` — Regular Bonus Call. 活动结束时，玩家保证赢得 `callAmount`。该常规奖金目前未启用；当前仅支持免费旋转奖金。
 </ParamField>
 
 <ParamField body="callAmount" type="number" required>
-  The monetary value associated with the bonus.
+  与奖金关联的货币金额。
 
-  - For `bonusType = 1`: the maximum amount the player can win across all free spins.
-  - For `bonusType = 2`: the player will win exactly this amount.
+  - `bonusType = 1`: 玩家在所有免费旋转中可赢的最高金额。
+  - `bonusType = 2`: 玩家将精确赢得该金额。
 </ParamField>
 
 <ParamField body="expireAt" type="string" required>
-  The timestamp at which the bonus expires, in `YYYY-MM-DD HH:mm:ss` format (e.g., `"2026-12-01 23:59:59"`).
+  奖金过期的时间戳，格式为 `YYYY-MM-DD HH:mm:ss`（例如：`"2026-12-01 23:59:59"`）。
 </ParamField>
 
 <ParamField body="metaData" type="object">
-  Additional configuration for the bonus. Required when `bonusType = 1`.
+  附加配置，用于加成。当 `bonusType = 1` 时必填。
 
   <Expandable title="metaData fields">
     <ParamField body="metaData.spinAmount" type="number" required>
-      Number of free spins to award. Minimum: `1`, Maximum: `100`.
+      发放的免费旋转次数。最小值：`1`，最大值：`100`。
     </ParamField>
 
     <ParamField body="metaData.baseBetAmount" type="number" required>
-      Base bet amount. Example: for a 2 USD free spin, use `baseBetAmount: 2`
+      基础投注金额。例如：对于 2 美元的免费旋转，请使用 `baseBetAmount: 2`
     </ParamField>
   </Expandable>
 </ParamField>
@@ -89,29 +89,29 @@ curl --request POST \
 ```
 
 <Note>
-  For a Regular Bonus Call (`bonusType = 2`), you can omit `metaData` entirely. For a Free Spin Bonus (`bonusType = 1`), both `metaData.spinAmount` and `metaData.baseBetAmount` are required.
+  对于常规奖励调用（`bonusType = 2`），可以完全省略 metaData。对于免费旋转奖励（`bonusType = 1`），则必须同时提供 `metaData.spinAmount` 和 `metaData.baseBetAmount`。
 </Note>
 
 ---
 
 ## Response
 
-On success, the API returns the `issueId` you should store to track or cancel the bonus later.
+成功时，API 会返回你应保存的 issueId，以便之后跟踪或取消该奖金。
 
 <ResponseField name="success" type="bool">
-  `true` when the API call was processed without errors.
+  `true` 表示 API 调用已成功处理且无错误。
 </ResponseField>
 
 <ResponseField name="message" type="string">
-  A short confirmation string, typically `"OK"`.
+  一段简短的确认字符串，通常为 `"OK"`。
 </ResponseField>
 
 <ResponseField name="data" type="object">
-  The result payload.
+  结果载荷。
 
   <Expandable title="data fields">
     <ResponseField name="data.issueId" type="long">
-      The unique identifier for the registered bonus call. Store this value — you need it to check status or cancel the bonus.
+      已登记奖金调用的唯一标识符。请保存该值——你需要用它来查询状态或取消该奖金。
     </ResponseField>
   </Expandable>
 </ResponseField>
