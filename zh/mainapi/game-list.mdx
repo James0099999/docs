@@ -1,0 +1,99 @@
+---
+title: "Get Game List"
+---
+
+Use this endpoint to retrieve all games available to your operator account from a specific provider. The response includes the game code (used to launch a game), display name, thumbnail image URL, game type, and maintenance status. You can use this data to populate your game lobby UI and filter or badge games by type or availability.
+
+## Request
+
+```bash
+GET /v1/gamelist/:providerId
+```
+
+### Headers
+
+| Name | Value |
+| :-- | :-- |
+| `Authorization` | `Bearer <API_TOKEN>` |
+| `Content-Type` | `application/json` |
+| `Accept` | `application/json` |
+
+### Path Parameters
+
+<ParamField path="providerId" type="number" required>
+  The unique identifier of the provider whose game catalog you want to retrieve. You can get a list of valid provider IDs from [List Providers](https://docs.igamingace.com/mainapi/provider-list).
+</ParamField>
+
+## Example Request
+
+```bash
+curl --request GET \
+  --url "https://api.igamingace.com/v1/gamelist/1" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/json"
+```
+
+## Response
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "message": "OK",
+  "data": [
+    {
+      "gameID": 644,
+      "gameName": "Launch to Riches",
+	  "gameSymbol": "vswaysrocktrls",
+      "gameImage": "https://statics.igamingace.com/images/vswaysrocktrls.png",
+	  "freeBonusMeta": {
+			"betUnit": 0.2,
+			"maxMultiple": 1250
+	   },
+	  "publishDate": "2026-04-29"
+    }
+  ]
+}
+```
+
+### Response Fields
+
+<ResponseField name="success" type="bool">
+  Indicates whether the API call succeeded.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Textual confirmation of the API call result (e.g., `"OK"`).
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  Array of game objects available from the specified provider.
+
+  <Expandable title="data[]">
+    <ResponseField name="gameID" type="string">
+      Unique game identifier (game id). Pass this value as `gameId` when calling [Launch Game](https://skysoft-e628c952.mintlify.app/api-reference/games/game-launch).
+    </ResponseField>
+
+    <ResponseField name="gameName" type="string">
+      Display name of the game, suitable for use in your lobby UI.
+    </ResponseField>
+
+    <ResponseField name="gameSymbol" type="string">
+      Unique game symbol string.
+    </ResponseField>
+
+    <ResponseField name="gameImage" type="string">
+      URL of the game's thumbnail image.
+    </ResponseField>
+
+    <ResponseField name="freeBonusMeta" type="object">
+      This is for bonus call (free game). When creating free games, operators should specify base bet amount for free game which should be multiple of “betUnit” and should be less than “maxMultiple”.
+    </ResponseField>
+
+    <ResponseField name="publishDate" type="string">
+      Game published date
+    </ResponseField>
+  </Expandable>
+</ResponseField>
