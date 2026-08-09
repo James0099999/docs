@@ -63,6 +63,7 @@
           {
             "tab": "Slot Game API",
             "pages": [
+              "zh/welcome",
               {
                 "group": "Getting Started",
                 "pages": [
