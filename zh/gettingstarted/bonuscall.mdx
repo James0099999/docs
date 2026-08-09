@@ -2,94 +2,95 @@
 title: "Bonus Call"
 ---
 
-The Bonus Call feature lets you apply temporary bonuses to a player's active game session. Whether you want to reward new players with free spins or run a guaranteed-win promotion for retention, Bonus Call gives you a controlled mechanism to deliver those incentives through real gameplay rather than direct wallet credits.
+Bonus Call 功能可让你为玩家的当前游戏会话临时发放奖励。无论是用免费旋转欢迎新玩家，还是用保底赢奖活动做留存，Bonus Call 都提供了一套可控机制：通过真实对局发放激励，而不是直接给钱包加款。
 
-## Bonus types
+## 奖励类型
 
-We support two distinct types of bonus calls. Choose based on whether you want to offer risk-free spins or guarantee a specific winning outcome.
+我们支持两种 Bonus Call。请按需求选择：是提供零风险旋转，还是保证特定赢奖结果。
 
 <Tabs>
-  <Tab title="Free Spin Bonus">
-    A Free Spin Bonus grants a player a fixed number of free spins on a specific game. The spins are played out through the game engine just like normal spins, but the player's wallet is never charged — any wins are credited to their wallet automatically.
+  <Tab title="Free Spin Bonus（免费旋转奖励）">
+    向玩家发放指定游戏上的固定次数免费旋转。旋转由游戏引擎正常结算，与普通旋转相同，但不会扣玩家钱包——赢奖会自动入账。
 
-    **_Free Spin Bonus is available for only Pragmatic Play games._**
+    **_Free Spin Bonus 目前仅支持 Pragmatic Play 游戏_**
 
-    Key characteristics:
+   主要特点：
 
-    - A fixed number of spins is assigned to the player for a specific game
-    - Each spin does **not** deduct funds from the player's wallet
-    - Wins generated from free spins are credited to the player's wallet automatically
-    - The bet amount per spin and total spin count are predefined by you as the operator
-    - The outcome of each spin is determined by normal game RTP mechanics — wins are not guaranteed
+    - 为指定游戏给玩家分配固定次数旋转
+    - 每次旋转不会从玩家钱包扣款
+    - 免费旋转产生的赢奖会自动记入玩家钱包
+    - 单次投注额与总旋转次数由运营商预先设定
+    - 每次旋转结果仍按正常游戏 RTP 机制产生——不保证必赢
 
-    **Typical use cases:** welcome promotions, onboarding campaigns, re-engagement incentives for lapsed players.
+    **典型场景:** 欢迎促销、新手引导、流失玩家召回激励。
   </Tab>
-  <Tab title="Regular Bonus Call">
-    A Regular Bonus Call guarantees a specific winning amount for a player, delivered through actual gameplay execution rather than a direct wallet credit. The system runs real spins — including normal spins and any triggered bonus rounds — until the predefined target winning amount is reached.
+  <Tab title="Regular Bonus Call（常规 Bonus Call）">
+保证玩家获得指定赢奖金额，并通过真实对局执行发放，而非直接钱包加款。系统会运行真实旋转（含普通旋转及触发的奖励局），直到达到预设目标赢奖金额。
 
-    **_Regular Bonus Call is not available at the moment, but will be coming soon._**
+    **_Regular Bonus Call 暂未开放，即将推出。_**
 
-    Key characteristics:
+    主要特点：
 
-    - A predefined **target winning amount** is guaranteed to be delivered to the player
-    - The bonus is fulfilled through randomized gameplay, including normal spins and bonus rounds if triggered
-    - Spin count and spin type are determined dynamically by the game engine
-    - Each spin **deducts funds from the player's wallet**, exactly like a normal paid spin
-    - The system continues spinning until the total winnings meet the guaranteed bonus amount
-    - All bet and win transactions are recorded as standard game transactions
+    - 保证向玩家发放预设的**目标赢奖金额**
+    - 通过随机真实对局完成，含普通旋转及触发的奖励局
+    - 旋转次数与类型由游戏引擎动态决定
+    - 每次旋转会从玩家钱包扣款，与普通付费旋转相同
+    - 系统持续旋转，直到累计赢奖达到保证金额
+    - 所有投注与赢奖均按标准游戏交易记录
 
-    **How it works, step by step:**
+    **工作流程（逐步）：**
 
-    1. You initiate a Regular Bonus Call with a target winning amount
-    2. The system executes real spins using the game engine
-    3. Each spin deducts the bet amount from the player's wallet
-    4. Wins from spins and bonus rounds are credited to the wallet normally
-    5. The process continues until the guaranteed winning amount is fully delivered
+    1. 你发起带目标赢奖金额的 Regular Bonus Call
+    2. 系统通过游戏引擎执行真实旋转
+    3. 每次旋转从玩家钱包扣除投注额
+    4. 旋转及奖励局的赢奖按正常方式入账
+    5. 流程持续至保证赢奖金额全部发放完毕
 
-    **Typical use cases:** guaranteed win promotions, player retention campaigns with controlled payout, compensation scenarios where winnings must follow normal RTP behavior, promotional events requiring real gameplay interaction.
+    **典型场景:** 保底赢奖促销、可控派彩的留存活动、需符合正常 RTP 行为的补偿场景、要求真实对局互动的促销活动。
   </Tab>
 </Tabs>
 
-## Comparison
+## 对比
 
-| Feature | Free Spin Bonus | Regular Bonus Call |
+| 功能	 | Free Spin Bonus | Regular Bonus Call |
 | :-- | :-- | :-- |
-| Wallet balance used | No | Yes |
-| Guaranteed outcome | No (win depends on spin results) | Yes (target win amount) |
-| Gameplay execution | Yes | Yes |
-| Spin type | Free spins only | Normal spins and bonus rounds |
-| Bet deducted per spin | No | Yes |
-| Operator control | Spin count | Target win amount |
+| 使用钱包余额 | No | Yes |
+| 保证结果 | No (win depends on spin results) | Yes (target win amount) |
+| 真实对局执行 | Yes | Yes |
+| 旋转类型 | Free spins only | Normal spins and bonus rounds |
+| 每次旋转扣投注 | No | Yes |
+| 运营商可控项 | Spin count | Target win amount |
 
-## How to use
+## 如何使用
 
-**Registering a bonus call**
+**注册 bonus call**
 
-Call `POST /v1/bonus-call/register` to initiate a bonus for a player. In the request, specify the bonus type (`FreeSpin` or `Regular`) along with the required parameters for that type — spin count and bet amount for Free Spin Bonus, or target winning amount for Regular Bonus Call. Once registered, the bonus becomes active for the player's current or next game session.
+调用 `POST /v1/bonus-call/register` 为玩家发起奖励。请求中需指定奖励类型（`FreeSpin` 或 `Regular`），以及对应参数——Free Spin Bonus 需旋转次数与投注额，Regular Bonus Call 需目标赢奖金额。注册后，奖励会在玩家当前或下一局游戏会话中生效。
 
-**Canceling a bonus call**
 
-If a bonus is still in progress and has not yet been completed, you can cancel it by calling `POST /v1/bonus-call/cancel`. Once a bonus has been fully delivered, it cannot be canceled.
+**取消  bonus call**
 
-See the [Register Bonus](https://docs.igamingace.com/mainapi/bonus-call-register) and [Cancel Bonus](https://docs.igamingace.com/mainapi/bonus-call-cancel) API reference pages for full request and response schemas.
+若奖励仍在进行且尚未完成，可调用 `POST /v1/bonus-call/cancel` 取消。奖励一旦全部发放完成，则无法取消。
 
-## Bonus call lifecycle rules
+完整请求与响应结构请参阅 [Register Bonus](https://docs.igamingace.com/zh/mainapi/bonus-call-register) 与 [Cancel Bonus](https://docs.igamingace.com/zh/mainapi/bonus-call-cancel) API 参考页。
+
+## Bonus call 生命周期规则
 
 <AccordionGroup>
   <Accordion title="Free Spin Bonus lifecycle">
-    Free Spin Bonuses have a predefined expiration time set at the time of registration.
+    Free Spin Bonus 在注册时设定过期时间。
 
-    - If the player does not use all of their free spins before the expiration time, the bonus is automatically expired by the system
-    - Any unused spins remaining at expiration are forfeited and cannot be recovered
-    - Wins from spins used before expiration are unaffected and remain credited to the player's wallet
+    - 若玩家在过期前未用完全部免费旋转，系统会自动将奖励标记为过期
+    - 过期时剩余未使用旋转作废，且无法恢复
+    - 过期前已使用旋转产生的赢奖不受影响，仍保留在玩家钱包中
   </Accordion>
 
   <Accordion title="Regular Bonus Call lifecycle">
-    A Regular Bonus Call remains active until one of two conditions is met:
+    Regular Bonus Call 会一直保持有效，直至满足以下任一条件：
 
-    - The **full target winning amount** has been delivered to the player through gameplay, or
-    - The bonus reaches its **expiration time** before the target is met
+    - 通过游戏对局已向玩家发放全部目标赢奖金额，或
+    - 在目标达成前到达过期时间
 
-    While active, the bonus must either complete naturally or be manually canceled via `POST /v1/bonus-call/cancel`. An incomplete Regular Bonus Call that reaches its expiration will be closed by the system automatically.
+    生效期间，奖励须自然完成，或通过 `POST /v1/bonus-call/cancel` 手动取消。未完成的 Regular Bonus Call 到期后，系统会自动关闭。
   </Accordion>
 </AccordionGroup>
