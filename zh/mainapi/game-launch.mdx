@@ -1,0 +1,89 @@
+---
+title: "Game Launch"
+---
+
+This endpoint generates a secure game launch URL for a specified player and game. Once you have the URL, you can open it in an iframe embedded in your site or redirect the player directly to it in a new tab. Each call produces a session-specific URL tied to the player, provider, and game you supply.
+
+## Request
+
+```bash
+POST /v1/game/launch
+```
+
+### Headers
+
+| Name | Value |
+| :-- | :-- |
+| `Authorization` | `Bearer <API_TOKEN>` |
+| `Content-Type` | `application/json` |
+| `Accept` | `application/json` |
+
+### Request Body
+
+<ParamField body="playerId" type="string" required>
+  Your unique identifier for the player on your system.
+</ParamField>
+
+<ParamField body="providerId" type="number" required>
+  The unique identifier of the game provider. Retrieve valid provider IDs from [List Providers](https://docs.igamingace.com/mainapi/provider-list).
+</ParamField>
+
+<ParamField body="gameId" type="number" required>
+  The unique id of the game to launch. Retrieve valid game ids from [List Games](https://docs.igamingace.com/mainapi/game-list).
+</ParamField>
+
+<ParamField body="language" type="string" required>
+  Language code for the game interface (e.g., `en`). The game UI will be rendered in this language where supported by the provider.
+</ParamField>
+
+<ParamField body="returnUrl" type="string" required>
+  URL to redirect the player after they exit the game.
+</ParamField>
+
+<ParamField body="isStreamer" type="bool" required>
+  If isStreamer is true, the player's report is not considered to agent’s report, and the player can have more than 100% RTP.
+</ParamField>
+
+## Example Request
+
+```bash
+curl --request POST \
+  --url https://api.igamingace.com/v1/game/launch \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "playerId": "playerId_onOperatorSide",
+    "providerId": 1,
+    "gameId": 655,
+    "language": "en",
+    "returnUrl": "https://yourcasino.com/lobby",
+    "isStreamer": false
+  }'
+```
+
+## Response
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "message": "OK",
+  "data": "https://games.igamingace.com/launch?token=123456..."
+}
+```
+
+### Response Fields
+
+<ResponseField name="success" type="bool">
+  Indicates whether the request was processed successfully.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Result message of the request (e.g., `"OK"`).
+</ResponseField>
+
+<ResponseField name="data" type="string">
+  Game Launch URL.
+</ResponseField>
