@@ -2,7 +2,7 @@
 title: "Game Launch"
 ---
 
-This endpoint generates a secure game launch URL for a specified player and game. Once you have the URL, you can open it in an iframe embedded in your site or redirect the player directly to it in a new tab. Each call produces a session-specific URL tied to the player, provider, and game you supply.
+该端点会为指定玩家和游戏生成安全的游戏启动 URL。拿到 URL 后，可将其嵌入站点的 iframe，或在新标签页中直接跳转打开。每次调用都会生成与所提供玩家、供应商和游戏绑定的会话级 URL。
 
 ## Request
 
@@ -21,19 +21,19 @@ POST /v1/game/launch
 ### Request Body
 
 <ParamField body="playerId" type="string" required>
-  Your unique identifier for the player on your system.
+  您系统中玩家的唯一标识符。
 </ParamField>
 
 <ParamField body="providerId" type="number" required>
-  The unique identifier of the game provider. Retrieve valid provider IDs from [List Providers](https://docs.igamingace.com/mainapi/provider-list).
+  游戏供应商的唯一标识符。可通过 [List Providers](https://docs.igamingace.com/zh/mainapi/provider-list) 获取有效的供应商 ID。
 </ParamField>
 
 <ParamField body="gameId" type="number" required>
-  The unique id of the game to launch. Retrieve valid game ids from [List Games](https://docs.igamingace.com/mainapi/game-list).
+  要启动的游戏唯一 ID。可通过 [List Games](https://docs.igamingace.com/mainapi/game-list) 获取有效的游戏 ID。
 </ParamField>
 
 <ParamField body="language" type="string" required>
-  Language code for the game interface (e.g., `en`). The game UI will be rendered in this language where supported by the provider.
+  游戏界面的语言代码（例如 `en`）。在供应商支持的情况下，游戏 UI 将以此语言呈现。
 </ParamField>
 
 <ParamField body="returnUrl" type="string" required>
@@ -41,7 +41,7 @@ POST /v1/game/launch
 </ParamField>
 
 <ParamField body="isStreamer" type="bool" required>
-  If isStreamer is true, the player's report is not considered to agent’s report, and the player can have more than 100% RTP.
+  玩家退出游戏后跳转的 URL。若 isStreamer 为 true，则该玩家的报表不计入代理报表，且玩家 RTP 可超过 100%。
 </ParamField>
 
 ## Example Request
@@ -77,13 +77,13 @@ curl --request POST \
 ### Response Fields
 
 <ResponseField name="success" type="bool">
-  Indicates whether the request was processed successfully.
+  表示请求是否处理成功。
 </ResponseField>
 
 <ResponseField name="message" type="string">
-  Result message of the request (e.g., `"OK"`).
+  请求结果消息（例如 `"OK"`）。
 </ResponseField>
 
 <ResponseField name="data" type="string">
-  Game Launch URL.
+  游戏启动 URL。
 </ResponseField>
