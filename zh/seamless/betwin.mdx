@@ -2,78 +2,78 @@
 title: "BetWin"
 ---
 
-The `betwin` callback is sent when a player's bet and its outcome complete in a single atomic operation. Your implementation must deduct `betAmount` from the player's balance and add `winAmount` in one transaction — both operations succeed or neither does. This endpoint is used in game types where the bet and outcome are determined simultaneously, avoiding the need for a separate `withdraw` followed by a `deposit`.
+`betwin` 回调在玩家的投注及其结果以一次原子操作完成时发送。你的实现必须在同一事务中从玩家余额扣除 `betAmount`，并加上 `winAmount`——两项操作要么都成功，要么都不生效。该接口用于投注与结果同时确定的游戏类型，从而无需先单独 `withdraw` 再 `deposit`。
 
-- **URL:** Your configured Callback URL
+- **URL:** 你配置的 Callback URL
 - **Method:** POST
 - **Headers:** `X-Request-Signature`, `Content-Type`, `Accept`
 
 ## Request parameters
 
 <ParamField body="command" type="string" required>
-  Always `"betwin"` for this callback type.
+  本回调类型固定为 `"betwin"`
 </ParamField>
 
 <ParamField body="transactionId" type="long" required>
-  Unique reference of the transaction created in our system. Use this to enforce idempotency.
+  我们系统中创建的交易唯一引用，用于保证幂等性。
 </ParamField>
 
 <ParamField body="playerId" type="string" required>
-  Unique identifier of the player from your system.
+  系统中的玩家唯一标识。
 </ParamField>
 
 <ParamField body="roundId" type="long" required>
-  Unique reference of the game round.
+  游戏局唯一引用。
 </ParamField>
 
 <ParamField body="providerId" type="number" required>
-  Unique identifier of the game provider in our system.
+  我们系统中的游戏提供商唯一标识。
 </ParamField>
 
 <ParamField body="gameCode" type="int" required>
-  Unique game id of the game in our system.
+  我们系统中的游戏唯一 ID。
 </ParamField>
 
 <ParamField body="betAmount" type="number" required>
-  Player currency code per ISO-4217 (e.g., `EUR`, `USD`).
+  玩家货币代码，符合 ISO-4217（例如 `EUR`、`USD`）。
 </ParamField>
 
 <ParamField body="winAmount" type="number" required>
-  Bet amount to deduct from the player's balance.
+  需从玩家余额扣除的投注金额。
 </ParamField>
 
 <ParamField body="bonusId" type="long" required>
-  0: no bonus, else the bonus id related
+  0：无奖金，否则为相关奖金 ID。
 </ParamField>
 
 <ParamField body="timestamp" type="number" required>
-  Unix timestamp of the request.
+  请求的 Unix 时间戳。
 </ParamField>
 
 ## Response fields
 
-Your server must respond with HTTP 200 and a JSON body containing the following fields:
+你的服务器必须以 HTTP 200 响应，并在 JSON 正文中包含以下字段：
 
 <ResponseField name="balance" type="number" required>
-  The player's updated balance after the bet is deducted.
+  投注扣除后玩家的最新余额。
 </ResponseField>
 
 <ResponseField name="statusCode" type="string" required>
-  Result of the operation. Must be `"OK"` on success. See the status codes table below for all possible values.
+  操作结果。成功时必须为 `"OK"`。所有可能取值见下方状态码表。
 </ResponseField>
 
 ## Status codes
 
-| Status code | Description |
+| 状态码	 | 说明 |
 | :-- | :-- |
-| `OK` | Request successful |
-| `ERR_NOT_AUTHENTICATED` | The player is not authenticated |
-| `ERR_NOT_ENOUGH_MONEY` | The player's account has insufficient funds |
-| `ERR_INTEGRITY_CHECK_FAILED` | Message integrity check failed |
-| `ERR_UNKNOWN` | Internal server error |
+| `OK` | 请求成功 |
+| `ERR_NOT_AUTHENTICATED` | 玩家未通过身份验证 |
+| `ERR_NOT_ENOUGH_MONEY` | 玩家账户余额不足 |
+| `ERR_INTEGRITY_CHECK_FAILED` | 消息完整性校验失败 |
+| `ERR_UNKNOWN` | 内部服务器错误 |
 
 <Warning>
-  Your response must be returned within **3 seconds**. If the request times out or returns an error, we will **not** retry — a `cancel` callback will be sent instead to revert the game round. An unsuccessful bet also cancels the current round, preventing the player from proceeding further.
+  你的响应必须在 3 秒内返回。若请求超时或返回错误，我们不会重试——而是会发送 `cancel` 回调以回滚该游戏局。投注失败也会取消当前局，阻止玩家继续进行。
 </Warning>
 
 ## Examples
