@@ -4,7 +4,9 @@ title: "Balance"
 
 我们会在玩家启动游戏时，以及游戏过程中每分钟发送一次余额回调，以保持界面显示的余额为最新。在返回玩家余额之前，您必须验证玩家的会话仍处于有效且已认证状态。除 OK 以外的任何状态码都会终止当前流程，并向玩家显示错误信息。
 
-- **URL:** 您配置的回调 URL
+**_无需在回调 URL 末尾添加“Balance”；您可以获取请求正文“command”来识别哪个回调即将到来。_**
+
+- **URL:** 您配置的回调 URL(ex: [**_https://mycallback.com/cb_**](https://mycallback.com/cb))
 - **Method:** POST
 - **Headers:** `X-Request-Signature`, `Content-Type`, `Accept`
 
@@ -36,7 +38,7 @@ title: "Balance"
 
 ## Status codes
 
-| 状态码	 | 说明 |
+| 状态码 | 说明 |
 | :-- | :-- |
 | `OK` | 请求成功 |
 | `ERR_INVALID_ACCOUNT` | 玩家货币与请求中的货币代码不匹配 |

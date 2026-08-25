@@ -4,7 +4,9 @@ title: "Bet"
 
 当玩家下注时，会发送`“bet”`回调函数。您的服务器必须从玩家余额中扣除投注金额，并返回更新后的余额。该操作是幂等的——如果您的钱包收到多个具有相同 `transactionId` 的请求，必须只登记一次该交易。
 
-- **URL:** 您配置的回调 URL
+**_无需在回调 URL 末尾添加“Bet”；您可以获取请求正文“command”来识别哪个回调即将到来。_**
+
+- **URL:** 您配置的回调 URL(ex: [**_https://mycallback.com/cb_**](https://mycallback.com/cb))
 - **Method:** POST
 - **Headers:** `X-Request-Signature`, `Content-Type`, `Accept`
 
@@ -31,7 +33,7 @@ title: "Bet"
 </ParamField>
 
 <ParamField body="gameCode" type="int" required>
- 我们系统中该游戏的唯一游戏 ID
+  我们系统中该游戏的唯一游戏 ID
 </ParamField>
 
 <ParamField body="currency" type="string" required>
@@ -68,7 +70,7 @@ title: "Bet"
 
 ## Status codes
 
-| 状态码	 | 说明 |
+| 状态码 | 说明 |
 | :-- | :-- |
 | `OK` | 请求成功 |
 | `ERR_NOT_AUTHENTICATED` | 玩家未通过身份验证 |

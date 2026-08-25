@@ -4,7 +4,9 @@ title: "Win"
 
 当玩家赢得一局时会发送 `win` 回调。你的服务器必须将中奖金额记入玩家余额，并返回更新后的余额。该操作是幂等的——若钱包收到多个带有相同 transactionId 的请求，该交易只能登记一次。
 
-- **URL:** 你配置的 Callback URL
+**_无需在回调 URL 末尾添加“Win”；您可以获取请求正文“command”来识别哪个回调即将到来。_**
+
+- **URL:** 你配置的 Callback URL(ex: [**_https://mycallback.com/cb_**](https://mycallback.com/cb))
 - **Method:** POST
 - **Headers:** `X-Request-Signature`, `Content-Type`, `Accept`
 
@@ -64,7 +66,7 @@ title: "Win"
 
 ## Status codes
 
-| 状态码	 | 说明 |
+| 状态码 | 说明 |
 | :-- | :-- |
 | `OK` | 请求成功 |
 | `ERR_INTEGRITY_CHECK_FAILED` | 消息完整性校验失败 |

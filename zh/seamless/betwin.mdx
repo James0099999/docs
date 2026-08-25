@@ -4,7 +4,9 @@ title: "BetWin"
 
 `betwin` 回调在玩家的投注及其结果以一次原子操作完成时发送。你的实现必须在同一事务中从玩家余额扣除 `betAmount`，并加上 `winAmount`——两项操作要么都成功，要么都不生效。该接口用于投注与结果同时确定的游戏类型，从而无需先单独 `withdraw` 再 `deposit`。
 
-- **URL:** 你配置的 Callback URL
+**_无需在回调 URL 末尾添加“BetWin”；您可以获取请求正文“command”来识别哪个回调即将到来。_**
+
+- **URL:** 你配置的 Callback URL(ex: [**_https://mycallback.com/cb_**](https://mycallback.com/cb))
 - **Method:** POST
 - **Headers:** `X-Request-Signature`, `Content-Type`, `Accept`
 
@@ -64,7 +66,7 @@ title: "BetWin"
 
 ## Status codes
 
-| 状态码	 | 说明 |
+| 状态码 | 说明 |
 | :-- | :-- |
 | `OK` | 请求成功 |
 | `ERR_NOT_AUTHENTICATED` | 玩家未通过身份验证 |
