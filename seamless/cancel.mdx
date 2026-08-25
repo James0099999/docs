@@ -4,7 +4,9 @@ title: "Cancel"
 
 The `cancel` callback is sent when a player's bet fails to complete — due to network issues, timeouts, or system errors. Your server must refund the full bet amount back to the player's balance to ensure account accuracy. This operation is idempotent — if your wallet receives more than one request with the same `transactionId`, you must register the refund only once.
 
-- **URL:** Your configured Callback URL
+**_No need to add "Cancel" at the end of your callback URL; you can get the request body "command" to identify which callback is coming._**
+
+- **URL:** Your configured Callback URL(ex: [**_https://mycallback.com/cb_**](https://mycallback.com/cb))
 - **Method:** POST
 - **Headers:** `X-Request-Signature`, `Content-Type`, `Accept`
 

@@ -4,7 +4,9 @@ title: "BetWin"
 
 The `betwin` callback is sent when a player's bet and its outcome complete in a single atomic operation. Your implementation must deduct `betAmount` from the player's balance and add `winAmount` in one transaction — both operations succeed or neither does. This endpoint is used in game types where the bet and outcome are determined simultaneously, avoiding the need for a separate `withdraw` followed by a `deposit`.
 
-- **URL:** Your configured Callback URL
+**_No need to add "BetWin" at the end of your callback URL; you can get the request body "command" to identify which callback is coming._**
+
+- **URL:** Your configured Callback URL(ex: [**_https://mycallback.com/cb_**](https://mycallback.com/cb))
 - **Method:** POST
 - **Headers:** `X-Request-Signature`, `Content-Type`, `Accept`
 
