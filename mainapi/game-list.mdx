@@ -22,6 +22,12 @@ GET /v1/gamelist/:providerId
 
 <ParamField path="providerId" type="number" required>
   The unique identifier of the provider whose game catalog you want to retrieve. You can get a list of valid provider IDs from [List Providers](https://docs.igamingace.com/mainapi/provider-list).
+
+  ### Parameters
+
+  <ParamField path="language" default="EN" type="string">
+    Localized `gameName` (and PG Soft `gameImage`) are returned based on this value. This parameter is not required; if ignored, the default value "EN" is assigned. Available values are "EN", "CN" and case-insensitive.
+  </ParamField>
 </ParamField>
 
 ## Example Request

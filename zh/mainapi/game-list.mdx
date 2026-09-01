@@ -21,7 +21,13 @@ GET /v1/gamelist/:providerId
 ### Path Parameters
 
 <ParamField path="providerId" type="number" required>
-	要获取其游戏目录的供应商唯一标识符。有效的供应商 ID 列表可从 [List Providers](https://docs.igamingace.com/zh/mainapi/provider-list) 获取。
+  要获取其游戏目录的供应商唯一标识符。有效的供应商 ID 列表可从 [List Providers](https://docs.igamingace.com/zh/mainapi/provider-list) 获取。
+
+  ### Parameters
+
+  <ParamField path="language" default="EN" type="string">
+    系统会根据此值返回本地化的 `gameName`（以及 PG Soft 的 `gameImage`）。此参数并非必需；如果忽略，则默认值为“EN”。可用值为“EN”、“CN”和不区分大小写的版本。
+  </ParamField>
 </ParamField>
 
 ## Example Request
@@ -73,7 +79,7 @@ curl --request GET \
 
   <Expandable title="data[]">
     <ResponseField name="gameID" type="string">
-	  游戏的唯一标识符（game id）。调用 [Launch Game](https://docs.igamingace.com/zh/api-reference/games/game-launch) 时，请将此值作为 `gameId` 传入。
+      游戏的唯一标识符（game id）。调用 [Launch Game](https://docs.igamingace.com/zh/api-reference/games/game-launch) 时，请将此值作为 `gameId` 传入。
     </ResponseField>
 
     <ResponseField name="gameName" type="string">
