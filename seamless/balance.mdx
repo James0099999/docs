@@ -20,6 +20,10 @@ We send the `balance` callback when a player launches a game and every minute du
   Unique identifier of the player from your system.
 </ParamField>
 
+<ParamField body="gameCode" type="int" required>
+  Unique game ID of the game in our system.
+</ParamField>
+
 <ParamField body="timestamp" type="number" required>
   Unix timestamp of the request.
 </ParamField>
@@ -59,6 +63,7 @@ Your server must respond with HTTP 200 and a JSON body containing the following 
 {
   "command": "balance",
   "playerId": "1101",
+  "gameCode": 65,
   "timestamp": 1586335186372
 }
 ```
