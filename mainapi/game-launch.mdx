@@ -21,7 +21,9 @@ POST /v1/game/launch
 ### Request Body
 
 <ParamField body="playerId" type="string" required>
-  Your unique identifier for the player on your system.
+  Your unique identifier for the player on your system. 
+
+  Length:1–50 characters; Allowed characters: A–Z, a–z, 0–9, \_
 </ParamField>
 
 <ParamField body="providerId" type="number" required>
