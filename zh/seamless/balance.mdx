@@ -18,10 +18,14 @@ title: "Balance"
 
 <ParamField body="playerId" type="string" required>
   您系统中的玩家唯一标识符。
+</ParamField>
 
-  <ParamField body="gameCode" type="int" required>
-    我们系统中该游戏的唯一游戏 ID
-  </ParamField>
+<ParamField body="providerId" type="number" required>
+  我们系统中游戏提供商的唯一标识
+</ParamField>
+
+<ParamField body="gameCode" type="int" required>
+  我们系统中该游戏的唯一游戏 ID
 </ParamField>
 
 <ParamField body="timestamp" type="number" required>
