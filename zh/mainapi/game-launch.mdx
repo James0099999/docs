@@ -44,6 +44,10 @@ POST /v1/game/launch
   玩家退出游戏后跳转的 URL。若 isStreamer 为 true，则该玩家的报表不计入代理报表，且玩家 RTP 可超过 100%。
 </ParamField>
 
+<ParamField body="payoutRate" type="number">
+  返还率（RTP），以百分比表示。允许范围：80 至 99（支持小数，例如 96.5）。若未填写，则使用为代理商配置的返还率。
+</ParamField>
+
 ## Example Request
 
 ```bash

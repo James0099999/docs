@@ -46,6 +46,10 @@ POST /v1/game/launch
   If isStreamer is true, the player's report is not considered to agent’s report, and the player can have more than 100% RTP.
 </ParamField>
 
+<ParamField body="payoutRate" type="number">
+  Payout rate (RTP) in percent. Allowed range: `80` to `99` (decimals such as `96.5` allowed). If omitted, the payout rate configured for the agent is used.
+</ParamField>
+
 ## Example Request
 
 ```bash
