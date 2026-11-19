@@ -1,0 +1,66 @@
+---
+title: "RTP Change"
+---
+
+This endpoint changes the player's RTP in real time. It only affects players already created in the gaming system. If players are not created in the system, you can use the launch URL payoutRate.
+
+## Request
+
+```bash
+POST /v1/player/payout-rate
+```
+
+### Headers
+
+| Name | Value |
+| :-- | :-- |
+| `Authorization` | `Bearer <API_TOKEN>` |
+| `Content-Type` | `application/json` |
+| `Accept` | `application/json` |
+
+### Request Body
+
+<ParamField body="playerId" type="string" required>
+  Your unique identifier for the player on your system.
+
+  Length:1–50 characters; Allowed characters: A–Z, a–z, 0–9, \_
+</ParamField>
+
+<ParamField body="payoutRate" type="number">
+  `10`–`99`. A number sets or replaces the player's RTP. `null` or omitted **clears** the player's rate, and the agent's configured rate is used again.
+</ParamField>
+
+## Example Request
+
+```bash
+curl --request POST \
+  --url https://api.gamecompany.com/v1/player/payout-rate \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "playerId": "playerId_onOperatorSide",
+    "payoutRate": 95.3
+  }'
+```
+
+## Response
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "message": "OK"
+}
+```
+
+### Response Fields
+
+<ResponseField name="success" type="bool">
+  Indicates whether the request was processed successfully.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Result message of the request (e.g., `"OK"`).
+</ResponseField>

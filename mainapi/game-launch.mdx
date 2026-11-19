@@ -47,7 +47,7 @@ POST /v1/game/launch
 </ParamField>
 
 <ParamField body="payoutRate" type="number">
-  Payout rate (RTP) in percent. Allowed range: `80` to `99` (decimals such as `96.5` allowed). If omitted, the payout rate configured for the agent is used.
+  Payout rate (RTP) in percent. Allowed range: `10` to `99` (decimals such as `96.5` allowed). If omitted, the payout rate configured by the RTP Change API or the agent's RTP will be used. `payoutRate` does not affect to the `isStreamer.`
 </ParamField>
 
 ## Example Request

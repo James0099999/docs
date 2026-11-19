@@ -45,7 +45,7 @@ POST /v1/game/launch
 </ParamField>
 
 <ParamField body="payoutRate" type="number">
-  返还率（RTP），以百分比表示。允许范围：80 至 99（支持小数，例如 96.5）。若未填写，则使用为代理商配置的返还率。
+  以百分比表示的返还率（RTP）。允许范围：`10` 至 `99`（支持小数，例如 `96.5`）。若未指定，则使用通过“RTP 变更 API”（RTP Change API）配置的返还率，或代理商所设定的返还率。`payoutRate` 不会影响 `isStreamer` 属性。
 </ParamField>
 
 ## Example Request

@@ -38,6 +38,7 @@
                   "mainapi/provider-list",
                   "mainapi/game-list",
                   "mainapi/game-launch",
+                  "mainapi/rtp-change",
                   "mainapi/bonus-call-register",
                   "mainapi/bonus-call-cancel"
                 ]
@@ -82,6 +83,7 @@
                   "zh/mainapi/provider-list",
                   "zh/mainapi/game-list",
                   "zh/mainapi/game-launch",
+                  "zh/mainapi/rtp-change",
                   "zh/mainapi/bonus-call-register",
                   "zh/mainapi/bonus-call-cancel"
                 ]

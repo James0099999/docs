@@ -1,0 +1,64 @@
+---
+title: "RTP Change"
+---
+
+此接口可实时调整玩家的 RTP（玩家回报率）。它仅对已在游戏系统中创建的玩家生效。若玩家尚未在系统中创建，您可通过启动链接（launch URL）中的 `payoutRate` 参数进行设置。
+
+## Request
+
+```bash
+POST /v1/player/payout-rate
+```
+
+### Headers
+
+| Name | Value |
+| :-- | :-- |
+| `Authorization` | `Bearer <API_TOKEN>` |
+| `Content-Type` | `application/json` |
+| `Accept` | `application/json` |
+
+### Request Body
+
+<ParamField body="playerId" type="string" required>
+  您系统中玩家的唯一标识符。 长度：1–50 个字符；允许的字符：A–Z、a–z、0–9、\_
+</ParamField>
+
+<ParamField body="payoutRate" type="number">
+  `10`–`99`。该数值用于设定或替换玩家的 RTP（玩家回报率）。若设为 `null` 或省略该参数，则会**清除**玩家的 RTP 设置，系统将恢复使用代理所配置的费率。
+</ParamField>
+
+## Example Request
+
+```bash
+curl --request POST \
+  --url https://api.gamecompany.com/v1/player/payout-rate \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "playerId": "playerId_onOperatorSide",
+    "payoutRate": 95.3
+  }'
+```
+
+## Response
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "message": "OK"
+}
+```
+
+### Response Fields
+
+<ResponseField name="success" type="bool">
+  表示请求是否处理成功。
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  请求结果消息（例如 `"OK"`）。
+</ResponseField>
